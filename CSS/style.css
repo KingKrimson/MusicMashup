@@ -1,0 +1,119 @@
+/* 
+    Document   : style
+    Created on : Feb 2, 2013, 6:29:08 PM
+    Author     : Andrew Brown
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/* 
+   TODO customize this sample style
+   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
+*/
+
+root { 
+    display: block;
+    color: black;
+}
+
+header {
+    color: white;
+    display: block;
+}
+
+
+/****************************************************************
+Login stuff
+****************************************************************/
+
+div.login{  
+display: inline;
+overflow: hidden;
+}
+
+table.login{
+float:right; 
+margin-top: 5px; 
+margin-bottom: 0px;
+margin-left: 0px;
+margin-right: 0px; 
+}
+
+text.login{
+color:#9E9E9E;
+font-style:italic;
+}
+/****************************************************************
+Navigation bar
+****************************************************************/
+
+div.mainnav{
+overflow: hidden; 
+display:inline;
+}
+
+ul#list-nav
+ {
+float: left; 
+margin-top: 5px;
+margin-right: 0px;
+margin-left: 0px;
+margin-bottom: 5px; 
+padding-top: 0px;
+padding-bottom: 5px;
+padding-left: 0px;
+padding-right: 0px; 
+list-style:none;
+overflow: auto;
+font-family: Verdana, Geneva, sans-serif;
+}
+
+ul#list-nav li
+ {
+display:inline
+}
+
+ul#list-nav li a
+ {
+text-decoration:none;
+display: block;
+padding:5px 21px;
+background:#555555;
+color:#eee;
+float:left;
+text-align:center;
+border-top:2px solid #777777;
+border-right:2px solid #333333;
+border-bottom:2px solid #444444;
+border-left:2px solid #777777;
+font-family: Verdana, Geneva, sans-serif;
+}
+
+ul#list-nav li a.selected
+ {
+text-decoration:none;
+display: block;
+padding:5px 21px;
+color:#eee;
+float:left;
+text-align:center;
+background:#999999;
+color:#000;
+border-top:2px solid #777777;
+border-right:2px solid #aaaaaa;
+border-bottom:2px solid #aaaaaa;
+border-left:2px solid #777777;
+font-family: Verdana, Geneva, sans-serif;
+}
+
+
+ul#list-nav li a:hover 
+{
+background:#999999;
+color:#000;
+border-top:2px solid #777777;
+border-right:2px solid #aaaaaa;
+border-bottom:2px solid #aaaaaa;
+border-left:2px solid #777777;
+font-family: Verdana, Geneva, sans-serif;
+}
