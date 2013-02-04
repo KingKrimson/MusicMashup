@@ -14,6 +14,7 @@
     </head>
     <body>
         <?php include_once 'header.html';?>
+        <div class="clear"></div>
         <div id="pagecontent">
             <h1>Welcome to Alternews!</h1>
             <p>Alternews is your one stop shop for all of your alternate rock
@@ -29,7 +30,8 @@
                 <a href="userlist.php">Users</a>
                 <a href="rssfeed.php">RSS</a>
                 <a href="registration.php">Register</a>          
-            </p>        
+            </p>  
+            <div class="clear"></div>
         </div>    
         <?php include_once 'widgetpane.php'; ?>
         <?php include_once 'footer.html'; ?>    

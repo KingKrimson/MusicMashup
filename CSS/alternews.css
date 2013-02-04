@@ -41,8 +41,17 @@ div#pagecontent {
     
 }
 
+/*
+This particular div is a hacky way of getting floats and related elements
+to display properly.
+*/
+
+div.clear {
+    clear: both;
+}
+
 /*******************************************************************************
-Footer
+Header
 *******************************************************************************/
 header {
     background: black;
@@ -153,5 +162,4 @@ font-family: Verdana, Geneva, sans-serif;
 Footer
 *******************************************************************************/
 footer {
-    clear: both;
 }

@@ -15,7 +15,8 @@
     </head>
     <body>
         <?php include_once 'header.html';?>
-        
+        <div class="clear"></div>
+        <div class="clear"></div>
         <?php include_once 'widgetpane.php'; ?>
         <?php include_once 'footer.html'; ?>    
     </body>

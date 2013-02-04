@@ -16,6 +16,7 @@
     </head>
     <body>
         <?php include_once 'header.html'; ?>
+        <div class="clear"></div>
         <div id="pagecontent">
             <h1>Bands</h1>
             <?php
@@ -38,6 +39,7 @@
             }
             ?>
         </div>
+        <div class="clear"></div>
         <?php include_once 'widgetpane.php'; ?>
         <?php include_once 'footer.html'; ?>    
     </body>
