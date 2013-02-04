@@ -26,7 +26,7 @@
                 echo '<p>Could not connect to database:' . mysql_error() . '</p>';
             } else {
                 $database = mysql_select_db($db_database);
-                $bandquery = 'SELECT * FROM artist ORDER BY artistname DESC';
+                $bandquery = 'SELECT * FROM artist ORDER BY artistname ASC';
                 $result = mysql_query($bandquery);
                 if (!$result) {
                     echo '<p>Could not access bands:' . mysql_error() . '</p>';

@@ -14,7 +14,10 @@
     <body>
         <?php include_once 'header.html';?>
         <div class="clear"></div>
-        
+        <div id="pagecontent">
+            <h1>RSS</h1>
+            <p>RSS goes here</p>
+        </div>
         <div class="clear"></div>
         <?php include_once 'widgetpane.php'; ?>
         <?php include_once 'footer.html'; ?>    

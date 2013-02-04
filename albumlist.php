@@ -28,7 +28,7 @@
             } else {
                 $database = mysql_select_db($db_database);
                 $albumquery = 'SELECT albumcoveruri, albumname, artistname, year ' .
-                        'FROM album NATURAL JOIN artist ORDER BY albumname DESC';
+                        'FROM album NATURAL JOIN artist ORDER BY albumname ASC';
                 $result = mysql_query($albumquery);
                 if (!$result) {
                     echo '<p>Could not access artists: ' . mysql_error() . '</p>';
