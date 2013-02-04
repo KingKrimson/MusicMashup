@@ -1,0 +1,157 @@
+/******************************************************************************* 
+    Name: alternews.css
+    Author: Andrew Brown
+    Date: 03/02/2013
+    Description:
+    I'm pretty terrible at CSS, but this is a start. To be honest, the style
+    is probably the least important aspect of the website, so prettying it up
+    can probably wait until the end of the project. Full disclosure, I based 
+    this code off of the CSS for the 'WebAir' website last year, which I 
+    developed along with Alex Brown, Dan Park, and David Armstrong. The CSS 
+    was written by myself and David.  
+*******************************************************************************/
+
+/*******************************************************************************
+General site display (body, html and divs)
+*******************************************************************************/
+html { 
+    display: block;
+    overflow: auto;
+    background-color: black;
+}
+
+body {
+    display: block;
+    width: 900px;
+    background-color: white;
+    width: 1024px;
+    margin: auto;
+    padding-right: 50px;
+    padding-left:50px;
+    padding-top: 10px;
+}
+
+div#pagecontent {
+    display: block;
+    float: left;
+    color: black;
+    border: 3px solid black;
+    border-radius: 15px; /*Netbeans complains about this element, but it's valid CSS3.*/
+    padding: 0px 50px 0px;
+    
+}
+
+/*******************************************************************************
+Footer
+*******************************************************************************/
+header {
+    background: black;
+    display: block;
+    border: 5px solid black;
+    border-radius: 15px;
+    padding: 0px 164px 0px
+}
+
+
+/*******************************************************************************
+Login stuff
+*******************************************************************************/
+
+div.login{  
+display: inline;
+overflow: hidden;
+}
+
+table.login{
+float:right; 
+margin-top: 5px; 
+margin-bottom: 0px;
+margin-left: 0px;
+margin-right: 0px; 
+}
+
+text.login{
+color:#9E9E9E;
+font-style:italic;
+}
+/*******************************************************************************
+Navigation bar
+*******************************************************************************/
+
+div.mainnav{
+overflow: hidden; 
+display:inline;
+}
+
+ul#list-nav
+ {
+float: left; 
+margin-top: 5px;
+margin-right: 0px;
+margin-left: 0px;
+margin-bottom: 5px; 
+padding-top: 0px;
+padding-bottom: 5px;
+padding-left: 0px;
+padding-right: 0px; 
+list-style:none;
+overflow: auto;
+font-family: Verdana, Geneva, sans-serif;
+}
+
+ul#list-nav li
+ {
+display:inline
+}
+
+ul#list-nav li a
+ {
+text-decoration:none;
+display: block;
+padding:5px 21px;
+background:#555555;
+color:#eee;
+float:left;
+text-align:center;
+border-top:2px solid #777777;
+border-right:2px solid #333333;
+border-bottom:2px solid #444444;
+border-left:2px solid #777777;
+font-family: Verdana, Geneva, sans-serif;
+}
+
+ul#list-nav li a.selected
+ {
+text-decoration:none;
+display: block;
+padding:5px 21px;
+color:#eee;
+float:left;
+text-align:center;
+background:#999999;
+color:#000;
+border-top:2px solid #777777;
+border-right:2px solid #aaaaaa;
+border-bottom:2px solid #aaaaaa;
+border-left:2px solid #777777;
+font-family: Verdana, Geneva, sans-serif;
+}
+
+
+ul#list-nav li a:hover 
+{
+background:#999999;
+color:#000;
+border-top:2px solid #777777;
+border-right:2px solid #aaaaaa;
+border-bottom:2px solid #aaaaaa;
+border-left:2px solid #777777;
+font-family: Verdana, Geneva, sans-serif;
+}
+
+/*******************************************************************************
+Footer
+*******************************************************************************/
+footer {
+    clear: both;
+}
