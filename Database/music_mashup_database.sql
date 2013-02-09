@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 04, 2013 at 02:50 AM
+-- Generation Time: Feb 09, 2013 at 10:37 PM
 -- Server version: 5.5.27
 -- PHP Version: 5.4.7
 
@@ -30,7 +30,7 @@ DROP TABLE IF EXISTS `album`;
 CREATE TABLE IF NOT EXISTS `album` (
   `albumid` int(11) NOT NULL AUTO_INCREMENT,
   `albumname` varchar(100) NOT NULL,
-  `year` date DEFAULT NULL,
+  `albumreleasedate` date DEFAULT NULL,
   `albumdescription` varchar(5000) DEFAULT NULL,
   `albumcoveruri` varchar(500) DEFAULT NULL,
   `artistid` int(11) NOT NULL,
@@ -43,7 +43,7 @@ CREATE TABLE IF NOT EXISTS `album` (
 -- Dumping data for table `album`
 --
 
-INSERT INTO `album` (`albumid`, `albumname`, `year`, `albumdescription`, `albumcoveruri`, `artistid`) VALUES
+INSERT INTO `album` (`albumid`, `albumname`, `albumreleasedate`, `albumdescription`, `albumcoveruri`, `artistid`) VALUES
 (1, 'Nevermind', '1991-09-24', 'Nevermind is the second studio album by the American rock band Nirvana, released on September 24, 1991. Produced by Butch Vig, Nevermind was the group''s first release on DGC Records. Frontman Kurt Cobain sought to make music outside the restrictive confines of the Seattle grunge scene, drawing influence from groups such as the Pixies and their use of song volume dynamics.  Despite low commercial expectations by the band and its record label, Nevermind became a surprise success in late 1991, largely due to the popularity of its first single, "Smells Like Teen Spirit". By January 1992, it had replaced Michael Jackson''s album Dangerous at number one on the Billboard charts. The album also produced three other successful singles: "Come as You Are", "Lithium", and "In Bloom". The Recording Industry Association of America has certified the album Diamond (over 10 million copies shipped), and the album has sold over 30 million copies worldwide. Nevermind was responsible for bringing alternative rock to a large mainstream audience, and critics subsequently regarded it as one of the best albums of all time.', './Images/AlbumImages/Nevermind.jpg', 4),
 (2, 'In Utero', '1993-09-13', 'In Utero is the third and final studio album by the American grunge band Nirvana, released on September 13, 1993, on DGC Records. Nirvana intended the record to diverge significantly from the polished production of its previous album, Nevermind (1991). To capture a more abrasive and natural sound, the group hired producer Steve Albini to record In Utero during a two-week period in February 1993 at Pachyderm Studio in Cannon Falls, Minnesota. The music was recorded quickly with few studio embellishments, and the song lyrics and album packaging incorporated medical imagery that conveyed frontman Kurt Cobain''s outlook on his publicized personal life and his band''s newfound fame.  Soon after recording was completed, rumors circulated in the press that DGC might not release the album in its original state, as the record label felt that the result was not commercially viable. Although Nirvana publicly denied the statements, the group was not fully satisfied with the sound Albini had captured. Albini declined to alter the album further, and ultimately the band hired Scott Litt to make minor changes to the album''s sound and remix the singles "Heart-Shaped Box" and "All Apologies".  Upon release, In Utero entered the Billboard 200 chart at number one and received critical acclaim as a drastic departure from Nevermind. The record has been certified five times platinum by the Recording Industry Association of America, and has sold 3.58 million copies in the United States alone.', './Images/AlbumImages/Inutero.jpg', 4),
 (3, 'Bleach', '1989-06-15', 'Bleach is the debut studio album by the American rock band Nirvana, released in June 1989 through the independent record label Sub Pop. The main recording sessions took place at Reciprocal Recording in Seattle, Washington between December 1988 and January 1989. Nirvana songwriter Kurt Cobain felt pressured to create music for Bleach that conformed to the grunge music style favored by his record label and the contemporary Seattle music scene. The album is regarded as quite negative and bleak; Cobain claimed that most of the lyrics were written the night before recording while he was feeling "pissed off", and that he did not regard them highly. The recording of the album was financed by Jason Everman, who was credited as a guitarist but did not play on any songs.  Bleach was well received by critics, but failed to chart in the U.S. upon its original release. The album was re-released internationally by Geffen Records in 1992 following the success of Nirvana''s second album, Nevermind (1991). The re-release debuted at number 89 on the Billboard 200, and peaked at number 33 on the UK Albums Chart and 34 on the Australian albums chart. In 2009 Sub Pop released a 20th anniversary edition of Bleach featuring a live recording of a Nirvana show in Portland, Oregon from 1990 as extra material. Since its release in 1989, Bleach has sold over 1.7 million units in the United States alone. It is Sub Pop''s best-selling release to date.', './Images/AlbumImages/Bleach.jpg', 4),
@@ -120,7 +120,7 @@ CREATE TABLE IF NOT EXISTS `artistpictures` (
 
 DROP TABLE IF EXISTS `favouriteartists`;
 CREATE TABLE IF NOT EXISTS `favouriteartists` (
-  `artistdatetimefavourited` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `artistdatetimefavourited` datetime NOT NULL,
   `userid` int(11) NOT NULL,
   `artistid` int(11) NOT NULL,
   PRIMARY KEY (`userid`,`artistid`),
@@ -135,7 +135,7 @@ CREATE TABLE IF NOT EXISTS `favouriteartists` (
 
 DROP TABLE IF EXISTS `favouritetracks`;
 CREATE TABLE IF NOT EXISTS `favouritetracks` (
-  `trackdatetimefavourited` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `trackdatetimefavourited` datetime NOT NULL,
   `userid` int(11) NOT NULL,
   `trackid` int(11) NOT NULL,
   PRIMARY KEY (`userid`,`trackid`),
@@ -240,26 +240,26 @@ CREATE TABLE IF NOT EXISTS `user` (
   `userrealname` varchar(100) DEFAULT NULL,
   `userage` int(11) DEFAULT NULL,
   `userdescription` varchar(5000) DEFAULT NULL,
-  `useravataruri` varchar(500) DEFAULT NULL,
+  `useravataruri` varchar(500) NOT NULL DEFAULT './Images/UserAvatars/default.jpg',
   PRIMARY KEY (`userid`),
   UNIQUE KEY `username` (`username`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=22 ;
 
 --
 -- Dumping data for table `user`
 --
 
 INSERT INTO `user` (`userid`, `username`, `userpassword`, `userrealname`, `userage`, `userdescription`, `useravataruri`) VALUES
-(1, 'Metal_Andrew', '*9AE953952D993ED69779E70E28193A1EB8DDF91C', 'Andrew Brown', 20, 'Hi, I''m Andrew! I like lots of genres of music, but I really like alternative rock! That''s why I co-created this website!', ''),
-(2, 'Thecarpthatruled', '*F15F7AB74DCB39D16F49BF6AF931FC6D42741392', 'Tom Mc Fadden', 22, 'WORDS. ALL THESE WORDS.', 'lolol'),
-(3, 'Clarky', '*2470C0C06DEE42FD1618BB99005ADCA2EC9D1E19', 'Adrien Clark', 20, 'I CAN COUNT TO POTATO!', NULL),
-(4, 'Mechacrash', '*6B53301837B18EECCABC48129A3287C7551AF6F7', 'Chris Harpum', 20, 'Love dem animes.', NULL),
-(5, 'Mikeal_The_Toreador', '*3CB0C82219E718B88B9D542848437D492F4F1979', 'Mikeal', 25, 'Hi everyone! I''m in a band myself, and as such, I know what good music is; if it''s on my favourites, you know you''re in for a good time. If you''re ever at the Elysium in Bristol, be sure to hit me up! If you don''t know what an Elysium is, then don''t worry your pretty little head about it. ;).', NULL),
-(6, 'Face_Of_Melinda', '*39AF3244F37C667DEB2E88362FD89A47B9FD382A', 'Melinda Black', 22, 'Hey. I''ve been in a couple of bands, and I think most of this stuff is pretty cool. My current band play every Friday in the Bristol Elysium. Come and check us out!', NULL),
-(7, 'NotABumblebee', '*5257EFAAB4D19F5FE291A23E00F14F75A085DEDC', 'Toki Wartooth', 29, 'Wowee! I''ve alway loved this stuffs, but my other bands mates think it''s not brutals :(. They''re wrongs, though!', NULL),
-(8, 'EvilOtto', '*1DCAE54664200F3568DFFDD625C7213E67267BDF', 'Otto', 32, 'The humanoid must not escape.', NULL),
-(9, 'Jay_T_Dawgzone', '*27EB5C9381CCDA9DAE433B162C67CF03EEC2040E', 'Jake The Dog', 24, 'Woof. Uh, I mean, Alternate Rock... Rocks. Yeah, that Sounds about right.', NULL),
-(10, 'XXXbloodyrists666XXX', 'MyImmortal', 'Tara Gillesbie', 17, 'WARNING: SUM OF DIS CHAPTA IS XTREMLY SCRAY. VIOWER EXCRETION ADVISD.', NULL);
+(1, 'Metal_Andrew', 'ce334041e5c12a36ccd41314b88e5942d22e6ee1', 'Andrew Brown', 20, 'Hi, I''m Andrew! I like lots of genres of music, but I really like alternative rock! That''s why I co-created this website!', './Images/UserAvatars/default.jpg'),
+(2, 'Thecarpthatruled', 'a7846a1b50b4d7eec6cf9b1cca338c89738848fa', 'Tom Mc Fadden', 22, 'WORDS. ALL THESE WORDS.', './Images/UserAvatars/default.jpg'),
+(3, 'Clarky', 'a0ca6550593c99c32133e98934b5518eefd0e95e', 'Adrien Clark', 20, 'I CAN COUNT TO POTATO!', './Images/UserAvatars/default.jpg'),
+(4, 'Mechacrash', 'b29cfb4950c3681489277ac55ab887fe5fcea3ab', 'Chris Harpum', 20, 'Love dem animes.', './Images/UserAvatars/default.jpg'),
+(5, 'Mikeal_The_Toreador', '94d42f8b0d10a13537128e7371a9f4eb6144e87e', 'Mikeal', 25, 'Hi everyone! I''m in a band myself, and as such, I know what good music is; if it''s on my favourites, you know you''re in for a good time. If you''re ever at the Elysium in Bristol, be sure to hit me up! If you don''t know what an Elysium is, then don''t worry your pretty little head about it. ;).', './Images/UserAvatars/default.jpg'),
+(6, 'Face_Of_Melinda', 'fb3cb55cd46317ce4fb36397ef88faea3728c5e4', 'Melinda Black', 22, 'Hey. I''ve been in a couple of bands, and I think most of this stuff is pretty cool. My current band play every Friday in the Bristol Elysium. Come and check us out!', './Images/UserAvatars/default.jpg'),
+(7, 'NotABumblebee', '25fca660eed03ee4931b4256202bd203164570a0', 'Toki Wartooth', 29, 'Wowee! I''ve alway loved this stuffs, but my other bands mates think it''s not brutals :(. They''re wrongs, though!', './Images/UserAvatars/default.jpg'),
+(8, 'EvilOtto', '742e310211851f65a3cb6b5994c926eb351c5ede', 'Otto', 32, 'The humanoid must not escape.', './Images/UserAvatars/default.jpg'),
+(9, 'Jay_T_Dawgzone', '10a323e50d79b2f2a0cf02c08a002ae2c396344b', 'Jake The Dog', 24, 'Woof. Uh, I mean, Alternate Rock... Rocks. Yeah, that Sounds about right.', './Images/UserAvatars/default.jpg'),
+(10, 'XXXbloodyrists666XXX', '0294171793721811223425cad8f1229729762eaa', 'Tara Gillesbie', 17, 'Xtremly scray.', './Images/UserAvatars/default.jpg');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

@@ -4,7 +4,10 @@
      Description: 
      The registration page. Here, new users can register, so that they can start
      favouriting artists and tracks, and add some simple information about
-     themselves to the database.                                             -->
+     themselves to the database.     
+-->
+<?php require_once 'databasevars.php';
+require_once 'login.php' ?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -14,18 +17,20 @@
     </head>
     <body>
         <?php
-        include_once 'header.html';
+        include_once 'header.php';
         echo '<div class="clear">';
         echo '<div id="pagecontent">';
-        if (!$_COOKIE && !$_POST) {
-            firstLoad();
-        } else if ($_POST["num"] == 1) {
-            extraDetails();
-        } else if ($_POST["num"] == 2) {
-            registrationComplete();
+        if (!isset($_COOKIE['username'])) {
+            if (!isset($_POST['num'])) {
+                firstLoad();
+            } else if ($_POST['num'] == 1) {
+                extraDetails();
+            } else if ($_POST['num'] == 2) {
+                registrationComplete();
+            }
         } else {
             echo '<h1>You\'re already registered</h1>';
-            echo '<p>Hey there! Looks like you\'re already registered! Get out there and favourite some bands or tracks!</p>';
+            echo "<p>Hey there {$_COOKIE['username']}! Looks like you're already registered! Get out there and favourite some bands or tracks!</p>";
         }
         echo '</div>';
         echo '<div class="clear"/>';
@@ -55,19 +60,18 @@ function firstLoad() {
 }
 
 function extraDetails() {
-    require_once 'databasevars.php';
-    $db_server = mysql_connect($db_hostname, $db_username, $db_password);
-    if (!$db_server) {
-        echo '<p>Could not connect to database:' . mysql_error() . '</p>';
+    global $db_hostname, $db_username, $db_password, $db_database, $salt1, $salt2;
+    $password = $salt1 . $_POST['password'] . $salt2;
+    if (!($db_server = mysqli_connect($db_hostname, $db_username, $db_password, $db_database))) {
+        echo '<p>Could not connect to database:' . mysqli_error($db_server) . '</p>';
     } else {
-        $database = mysql_select_db($db_database);
-        $insertuserquery = "INSERT INTO user (username, userpassword) VALUES ('$_POST[username]','$_POST[password]')";
-        if (!mysql_query($insertuserquery)) {
-            echo "<p>Couldn't insert you into database: " . mysql_error() . "</p>";
+        $insertuserquery = "INSERT INTO user (username, userpassword) VALUES ('$_POST[username]', SHA1('$_POST[password]'))";
+        if (!mysqli_query($db_server, $insertuserquery)) {
+            echo "<p>Couldn't insert you into database: " . mysqli_error() . "</p>";
         } else {
             ?>
             <h1>Tell us about yourself</h1>
-            <p>Congratulations <?php echo "{$_POST['username']}"?>! You have successfully registered!
+            <p>Congratulations <?php echo "{$_POST['username']}" ?>! You have successfully registered!
                 Why not tell us a bit about yourself?</p>
             <div class=register> <!-- start of login -->
                 <form class="register" action="registration.php" method="post">
@@ -82,26 +86,29 @@ function extraDetails() {
                 </form>
             </div>  <!-- End of login --> 
             <?php
-            mysql_close();
+            mysqli_close($db_server);
         }
     }
 }
 
 function registrationComplete() {
-    require_once 'databasevars.php';
-    $db_server = mysql_connect($db_hostname, $db_username, $db_password);
-    if (!$db_server) {
-        echo '<p>Could not connect to database:' . mysql_error() . '</p>';
+    global $db_hostname;
+    global $db_username;
+    global $db_password;
+    global $db_database;
+
+
+    if (!($db_server = mysqli_connect($db_hostname, $db_username, $db_password, $db_database))) {
+        echo '<p>Could not connect to database:' . mysqli_error() . '</p>';
     } else {
-        $database = mysql_select_db($db_database);
         $insertuserquery = "UPDATE user SET userrealname='$_POST[realname]', userage='$_POST[age]', userdescription='$_POST[description]' WHERE username='$_POST[username]'";
-        if (!mysql_query($insertuserquery)) {
-            echo "Couldn't insert your data into database: " . mysql_error();
+        if (!mysqli_query($db_server, $insertuserquery)) {
+            echo "Couldn't insert your data into database: " . mysqli_error();
         } else {
             echo "<h1>Congratulations</h1>";
             echo "<p>Looks like you're all set, {$_POST['username']}! Go favourite some tracks!</p>";
         }
-        mysql_close();
+        mysqli_close($db_server);
     }
 }
 ?>

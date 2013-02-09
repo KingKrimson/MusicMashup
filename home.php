@@ -6,6 +6,7 @@
      rest of the site; there's not much else here otherwise.                 -->
 
 <!DOCTYPE html>
+<?php require_once 'login.php'; ?>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -13,7 +14,7 @@
         <title>Alternews - Home</title>
     </head>
     <body>
-        <?php include_once 'header.html';?>
+        <?php include_once 'header.php';?>
         <div class="clear"></div>
         <div id="pagecontent">
             <h1>Welcome to Alternews!</h1>
@@ -22,15 +23,9 @@
                and their hit tracks. Be sure to let us know what your favourite
                bands and tracks are! Alternatively, you can get to know the 
                other users of the site, and meet like minded music fans!</p>
-            <p>To get started, click on one of the links below:</p>
-            <p>
-                <a href="bandlist.php">Bands</a>
-                <a href="albumlist.php">Albums</a>
-                <a href="tracklist.php">Tracks</a>
-                <a href="userlist.php">Users</a>
-                <a href="rssfeed.php">RSS</a>
-                <a href="registration.php">Register</a>          
-            </p>  
+            <p>To get started, click on one of the links above. When you
+               want to register, just click on the register page and fill
+               in your details!</p>
             <div class="clear"></div>
         </div>    
         <?php include_once 'widgetpane.php'; ?>
