@@ -32,8 +32,8 @@ require_once 'login.php' ?>
             if (!$db_server) {
                 echo '<p>Could not connect to database:' . mysqli_error($db_server);
             } else {
-                $albumquery = 'SELECT albumcoveruri, trackid, trackname, albumname, artistname, albumreleasedate ' .
-                        'FROM track NATURAL JOIN album NATURAL JOIN artist ORDER BY trackname DESC';
+                $albumquery = 'SELECT albumcoveruri, trackid, trackname, albumid, albumname, artistid, artistname, albumreleasedate ' .
+                        'FROM track NATURAL JOIN album NATURAL JOIN artist ORDER BY trackname ASC';
                 $result = mysqli_query($db_server, $albumquery);
                 if (!$result) {
                     echo '<p>Could not access artists: ' . mysqli_error($db_server) . '</p>';
@@ -43,11 +43,11 @@ require_once 'login.php' ?>
                     for ($i = 0; $i < $len; ++$i) {
                         $trackdetails = mysqli_fetch_assoc($result);
                         echo "<tr>";
-                        echo "   <td><img src=\"{$trackdetails["albumcoveruri"]}\" height=\"100\" width=\"100\"></img></td>";
-                        echo "   <td><a href=tracklist.php?trackid={$trackdetails['trackid']}>{$trackdetails["trackname"]}</a></td>";
-                        echo "   <td>{$trackdetails["albumname"]}</td>";
-                        echo "   <td>{$trackdetails["artistname"]}</td>";
-                        echo "   <td>{$trackdetails["albumreleasedate"]}</td>";
+                        echo "<td><img src=\"{$trackdetails["albumcoveruri"]}\" height=\"100\" width=\"100\"></img></td>";
+                        echo "<td><a href=tracklist.php?trackid={$trackdetails['trackid']}>{$trackdetails["trackname"]}</a></td>";
+                        echo "<td><a href='albumlist.php?albumid={$trackdetails['albumid']}'>{$trackdetails["albumname"]}</a></td>";
+                        echo "<td><a href='bandlist.php?artistid={$trackdetails['artistid']}'>{$trackdetails["artistname"]}</a></td>";
+                        echo "<td>{$trackdetails["albumreleasedate"]}</td>";
                         echo "</tr>";
                     }
                     echo '</table>';
@@ -71,7 +71,7 @@ function show_track($trackid) {
     if(!($db_server = mysqli_connect($db_hostname, $db_username, $db_password, $db_database))) {
         echo'<p>Couldn\'t connect to the database:' . mysqli_error($db_server) . '</p>';
     } else {
-        $trackquery = "SELECT artistid, artistname, albumid, albumcoveruri, albumname, albumreleasedate, trackname, trackdescription ".
+        $trackquery = "SELECT artistid, artistname, albumid, albumcoveruri, albumname, albumreleasedate, trackid, trackname, trackdescription ".
             "FROM artist NATURAL JOIN album NATURAL JOIN track WHERE trackid={$trackid}";
             if(!($result = mysqli_query($db_server, $trackquery))) {
                 echo '<p>Whoops! Couldn\'t find track! '. mysqli_error($db_server).'</p>';
@@ -79,10 +79,25 @@ function show_track($trackid) {
                 $trackdetails = mysqli_fetch_assoc($result);
                 echo "<h1>{$trackdetails['trackname']}</h1>";
                 echo "<img src=\"{$trackdetails['albumcoveruri']}\" />";
-                echo "<p>Band - <a href='bandlist.php?artistid={$trackdetails['artistid']}'>{$trackdetails['artistname']}</a><p>";
-                echo "<p>Album - <a href='albumlist.php?albumid={$trackdetails['albumid']}'>{$trackdetails['albumname']}</a></p>";
-                echo "<p>Date - {$trackdetails['albumreleasedate']}</p>";
-                echo "<p>Description - </p><p>{$trackdetails['trackdescription']}</p>";
+                echo "<h2>Band</h2> <p><a href='bandlist.php?artistid={$trackdetails['artistid']}'>{$trackdetails['artistname']}</a><p>";
+                echo "<h2>Album</h2> <p><a href='albumlist.php?albumid={$trackdetails['albumid']}'>{$trackdetails['albumname']}</a></p>";
+                echo "<h2>Date</h2> <p>{$trackdetails['albumreleasedate']}</p>";
+                echo "<h2>Favourites</h2>";
+                $favouritetrackquery = "SELECT userid, username, trackdatetimefavourited ".
+                        "FROM user NATURAL JOIN favouritetracks NATURAL JOIN track ".
+                        "WHERE trackid={$trackdetails['trackid']} ".
+                        "ORDER BY username ASC";
+                        $result = mysqli_query($db_server, $favouritetrackquery);
+                if (!mysql_num_rows($result)) {
+                echo '<p>Nobody has favourited this band yet.</p>';
+            } else {
+                $len = mysqli_num_rows($result);
+                for ($i = 0; $i < $len; ++$i) {
+                    $favouritetrackdetails = mysqli_fetch_assoc($result);
+                    echo "<p><a href='userlist.php?userid={$favouritetrackdetails['userid']}'>{$favouritetrackdetails['username']}</a> - {$favouritetrackdetails['trackdatetimefavourited']}</p>";
+                }
+            }
+                echo "<h2>Description</h2><p>{$trackdetails['trackdescription']}</p>";
             }
     }
     echo '</div>';

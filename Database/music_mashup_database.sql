@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 09, 2013 at 10:37 PM
+-- Generation Time: Feb 10, 2013 at 02:20 AM
 -- Server version: 5.5.27
 -- PHP Version: 5.4.7
 
@@ -115,6 +115,20 @@ CREATE TABLE IF NOT EXISTS `artistpictures` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `favouritealbums`
+--
+
+DROP TABLE IF EXISTS `favouritealbums`;
+CREATE TABLE IF NOT EXISTS `favouritealbums` (
+  `albumdatetimefavourited` datetime NOT NULL,
+  `albumid` int(11) NOT NULL,
+  `userid` int(11) NOT NULL,
+  PRIMARY KEY (`albumid`,`userid`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `favouriteartists`
 --
 
@@ -124,8 +138,17 @@ CREATE TABLE IF NOT EXISTS `favouriteartists` (
   `userid` int(11) NOT NULL,
   `artistid` int(11) NOT NULL,
   PRIMARY KEY (`userid`,`artistid`),
-  KEY `fk2_favouriteartists_to_artist` (`artistid`)
+  KEY `fk2_favouriteartists_to_artist` (`artistid`),
+  KEY `artistid` (`artistid`),
+  KEY `artistid_2` (`artistid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `favouriteartists`
+--
+
+INSERT INTO `favouriteartists` (`artistdatetimefavourited`, `userid`, `artistid`) VALUES
+('2013-02-09 22:59:39', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -138,8 +161,7 @@ CREATE TABLE IF NOT EXISTS `favouritetracks` (
   `trackdatetimefavourited` datetime NOT NULL,
   `userid` int(11) NOT NULL,
   `trackid` int(11) NOT NULL,
-  PRIMARY KEY (`userid`,`trackid`),
-  KEY `fk2_favouritetracks_to_track` (`trackid`)
+  PRIMARY KEY (`userid`,`trackid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------

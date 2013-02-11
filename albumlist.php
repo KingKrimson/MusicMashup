@@ -7,9 +7,9 @@
      release date. If you click on an album, you'll get more information about 
      it, such as tracks on the database, and a description of the album.     -->
 <!DOCTYPE html>
-<?php 
+<?php
 require_once 'databasevars.php';
-require_once 'login.php' 
+require_once 'login.php'
 ?>
 <html>
     <head>
@@ -82,20 +82,35 @@ function show_album($albumid) {
             $albumdetails = mysqli_fetch_assoc($result);
             echo "<h1>{$albumdetails['albumname']}</h1>";
             echo"<img src=\"{$albumdetails['albumcoveruri']}\"/>";
-            echo "<p>Artist - <a href=bandlist.php?artistid={$albumdetails['artistid']}>{$albumdetails['artistname']}</a></p>";
-            echo "<p>Date - {$albumdetails['albumreleasedate']}</p>";
+            echo "<h2>Artist</h2> <p><a href=bandlist.php?artistid={$albumdetails['artistid']}>{$albumdetails['artistname']}</a></p>";
+            echo "<h2>Date</h2> <p>{$albumdetails['albumreleasedate']}</p>";
             echo "<h2>Tracks</h2>";
             $trackquery = "SELECT trackid, trackname FROM track WHERE albumid={$albumdetails['albumid']} ORDER BY trackname ASC";
-            if(!($result = mysqli_query($db_server, $trackquery))) {
+            if (!($result = mysqli_query($db_server, $trackquery))) {
                 echo 'Couldn\'t find any tracks.';
             } else {
                 $len = mysqli_num_rows($result);
-                for($i = 0; $i < $len; ++$i) {
+                for ($i = 0; $i < $len; ++$i) {
                     $trackdetails = mysqli_fetch_assoc($result);
                     echo "<p><a href=tracklist.php?trackid={$trackdetails['trackid']}>{$trackdetails['trackname']}</a></p>";
                 }
             }
-            echo "<p>Description - </p> <p>{$albumdetails['albumdescription']}</p>";
+            echo "<h2>Favourites</h2>";
+            $favouritealbumquery = "SELECT userid, username, albumdatetimefavourited " .
+                    "FROM user NATURAL JOIN favouritealbums NATURAL JOIN album " .
+                    "WHERE albumid={$albumdetails['albumid']} " .
+                    "ORDER BY username ASC";
+            $result = mysqli_query($db_server, $favouritealbumquery);
+            if (!mysqli_num_rows($result)) {
+                echo '<p>Nobody has favourited this album yet.</p>';
+            } else {
+                $len = mysqli_num_rows($result);
+                for ($i = 0; $i < $len; ++$i) {
+                    $favouritealbumdetails = mysqli_fetch_assoc($result);
+                    echo "<p><a href='userlist.php?userid={$favouritealbumdetails['userid']}'>{$favouritealbumdetails['username']}</a> - {$favouritealbumdetails['artistdatetimefavourited']}</p>";
+                }
+            }
+            echo "<h2>Description</h2> <p>{$albumdetails['albumdescription']}</p>";
         }
     }
     echo '</div>';

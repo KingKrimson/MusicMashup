@@ -8,9 +8,9 @@
      of the band. From a specific artist page, users can 'favourite' them;
      these favourites are viewable on the corresponding user and artist pages.-->
 <!DOCTYPE html>
-<?php 
+<?php
 require_once 'databasevars.php';
-require_once 'login.php' 
+require_once 'login.php'
 ?>
 <html>
     <head>
@@ -88,6 +88,21 @@ function show_band($artistid) {
                 for ($i = 0; $i < $len; ++$i) {
                     $trackdetails = mysqli_fetch_assoc($result);
                     echo "<p><a href=tracklist.php?trackid={$trackdetails['trackid']}>{$trackdetails['trackname']}</a></p>";
+                }
+            }
+            echo "<h2>Favourites</h2>";
+            $favouriteartistquery = "SELECT userid, username, artistdatetimefavourited " .
+                    "FROM user NATURAL JOIN favouriteartists NATURAL JOIN artist " .
+                    "WHERE artistid={$artistdetails['artistid']} " .
+                    "ORDER BY username ASC";
+                    $result = mysqli_query($db_server, $favouriteartistquery);
+            if (!mysqli_num_rows($result)) {
+                echo '<p>Nobody has favourited this band yet.</p>';
+            } else {
+                $len = mysqli_num_rows($result);
+                for ($i = 0; $i < $len; ++$i) {
+                    $favouriteartistdetails = mysqli_fetch_assoc($result);
+                    echo "<p><a href='userlist.php?userid={$favouriteartistdetails['userid']}'>{$favouriteartistdetails['username']}</a> - {$favouriteartistdetails['artistdatetimefavourited']}</p>";
                 }
             }
             echo "<h2>Description</h2>";

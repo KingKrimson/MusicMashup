@@ -1,4 +1,15 @@
 <?php
+/* Name: login.php
+ * Authour: Andrew Brown
+ * Date: 10/02/2013
+ * Description:
+ * This file implements login/off functionality in the website. When a user tries
+ * to login using the form in the header, certain variables are sent here, namely
+ * the username, and the user password. The database is queried to see if the
+ * user exists, and if the right password was given. The password is interesting,
+ * as it must be hashed and salted before comparing it against the encrypted value
+ * in the database; storing plain text passwords in the database is a security risk.
+ */
 
 //require once is important here, as logon.php may be included in other files that access the database. 
 require_once 'databasevars.php';
@@ -14,13 +25,14 @@ function login() {
         if (!($db_server = mysqli_connect($db_hostname, $db_username, $db_password, $db_database))) {
             return -2;
         } else {
-            $logonquery = "SELECT username, useravataruri FROM user WHERE "
+            $logonquery = "SELECT userid, username, useravataruri FROM user WHERE "
                     . "username = '$username' AND userpassword = SHA1('$password')";
-            if (!($result = mysqli_query($db_server, $logonquery))) {
-                echo mysqli_error($db_server);
+            $result = mysqli_query($db_server, $logonquery);
+            if (!mysqli_num_rows($result)) {
                 return -1;
             } else {
                 $userdetails = mysqli_fetch_assoc($result);
+                setcookie('userid', $userdetails['userid'], time() + (60 * 60 * 24 * 7));
                 setcookie('username', $userdetails['username'], time() + (60 * 60 * 24 * 7));
                 setcookie('useravataruri', $userdetails['useravataruri'], time() + (60 * 60 * 24 * 7));
                 mysqli_close($db_server);
