@@ -54,6 +54,8 @@ require_once 'login.php'
 <?php
 
 function show_band($artistid) {
+    require_once ('favourite.php');
+
     global $db_hostname, $db_username, $db_password, $db_database;
     echo '<div id="pagecontent">';
     if (!($db_server = mysqli_connect($db_hostname, $db_username, $db_password, $db_database))) {
@@ -66,6 +68,8 @@ function show_band($artistid) {
         } else {
             $artistdetails = mysqli_fetch_assoc($result);
             echo "<h1>{$artistdetails['artistname']}</h1>";
+            //pics go here?
+            favouriteButton($db_server, $artistdetails['artistid'], 'artist');
             echo "<h2>Albums</h2>";
             $albumquery = "SELECT albumid, albumname FROM album WHERE " .
                     "artistid = {$artistdetails['artistid']} ORDER BY albumname ASC";
@@ -95,7 +99,7 @@ function show_band($artistid) {
                     "FROM user NATURAL JOIN favouriteartists NATURAL JOIN artist " .
                     "WHERE artistid={$artistdetails['artistid']} " .
                     "ORDER BY username ASC";
-                    $result = mysqli_query($db_server, $favouriteartistquery);
+            $result = mysqli_query($db_server, $favouriteartistquery);
             if (!mysqli_num_rows($result)) {
                 echo '<p>Nobody has favourited this band yet.</p>';
             } else {

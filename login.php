@@ -15,7 +15,13 @@
 require_once 'databasevars.php';
 
 $loginstatus = login();
-
+/*
+ * handles login and logout for the site. Has a variety of return values:
+ * -2: Couldn't access database.
+ * -1: User not found, or password incorrect.
+ * 1: login successful.
+ * 2: logout successful. 
+ */
 function login() {
     global $db_hostname, $db_username, $db_password, $db_database, $salt1, $salt2;
     if (isset($_POST['login'])) {
@@ -40,9 +46,12 @@ function login() {
             }
         }
     }
-    if (isset($_POST['logout'])) {
-        setcookie('username', '', time() - (60 * 60 * 24 * 30));
-        setcookie('useravataruri', '', time() - (60 * 60 * 24 * 30));
+    if (isset($_POST['logout'])) { // 'logout' button has been clicked.
+        //by setting the cookie deletion date to a time in the past, we force 
+        //deletion of the cookie.
+        setcookie('userid', $userdetails['userid'], time() + (60 * 60 * 24 * 365));
+        setcookie('username', '', time() - (60 * 60 * 24 * 365));
+        setcookie('useravataruri', '', time() - (60 * 60 * 24 * 365));
         return 2;
     }
     return 0;

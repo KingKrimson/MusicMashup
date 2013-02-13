@@ -7,8 +7,10 @@
      and album release date. If you click on a track, you'll get more 
      information about it, such as a description and a list of users who
      favourited it.                                                          -->
-<?php require_once 'databasevars.php';
-require_once 'login.php' ?>
+<?php
+require_once 'databasevars.php';
+require_once 'login.php'
+?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -66,39 +68,41 @@ require_once 'login.php' ?>
 <?php
 
 function show_track($trackid) {
+    require_once('favourite.php');
     global $db_hostname, $db_username, $db_password, $db_database;
     echo '<div id="pagecontent">';
-    if(!($db_server = mysqli_connect($db_hostname, $db_username, $db_password, $db_database))) {
+    if (!($db_server = mysqli_connect($db_hostname, $db_username, $db_password, $db_database))) {
         echo'<p>Couldn\'t connect to the database:' . mysqli_error($db_server) . '</p>';
     } else {
-        $trackquery = "SELECT artistid, artistname, albumid, albumcoveruri, albumname, albumreleasedate, trackid, trackname, trackdescription ".
-            "FROM artist NATURAL JOIN album NATURAL JOIN track WHERE trackid={$trackid}";
-            if(!($result = mysqli_query($db_server, $trackquery))) {
-                echo '<p>Whoops! Couldn\'t find track! '. mysqli_error($db_server).'</p>';
-            } else {
-                $trackdetails = mysqli_fetch_assoc($result);
-                echo "<h1>{$trackdetails['trackname']}</h1>";
-                echo "<img src=\"{$trackdetails['albumcoveruri']}\" />";
-                echo "<h2>Band</h2> <p><a href='bandlist.php?artistid={$trackdetails['artistid']}'>{$trackdetails['artistname']}</a><p>";
-                echo "<h2>Album</h2> <p><a href='albumlist.php?albumid={$trackdetails['albumid']}'>{$trackdetails['albumname']}</a></p>";
-                echo "<h2>Date</h2> <p>{$trackdetails['albumreleasedate']}</p>";
-                echo "<h2>Favourites</h2>";
-                $favouritetrackquery = "SELECT userid, username, trackdatetimefavourited ".
-                        "FROM user NATURAL JOIN favouritetracks NATURAL JOIN track ".
-                        "WHERE trackid={$trackdetails['trackid']} ".
-                        "ORDER BY username ASC";
-                        $result = mysqli_query($db_server, $favouritetrackquery);
-                if (!mysql_num_rows($result)) {
-                echo '<p>Nobody has favourited this band yet.</p>';
+        $trackquery = "SELECT artistid, artistname, albumid, albumcoveruri, albumname, albumreleasedate, trackid, trackname, trackdescription " .
+                "FROM artist NATURAL JOIN album NATURAL JOIN track WHERE trackid={$trackid}";
+        if (!($result = mysqli_query($db_server, $trackquery))) {
+            echo '<p>Whoops! Couldn\'t find track! ' . mysqli_error($db_server) . '</p>';
+        } else {
+            $trackdetails = mysqli_fetch_assoc($result);
+            echo "<h1>{$trackdetails['trackname']}</h1>";
+            echo "<img src=\"{$trackdetails['albumcoveruri']}\" />";
+            favouriteButton($db_server, $trackdetails['trackid'], 'track');
+            echo "<h2>Band</h2> <p><a href='bandlist.php?artistid={$trackdetails['artistid']}'>{$trackdetails['artistname']}</a><p>";
+            echo "<h2>Album</h2> <p><a href='albumlist.php?albumid={$trackdetails['albumid']}'>{$trackdetails['albumname']}</a></p>";
+            echo "<h2>Date</h2> <p>{$trackdetails['albumreleasedate']}</p>";
+            echo "<h2>Favourites</h2>";
+            $favouritetrackquery = "SELECT userid, username, trackdatetimefavourited " .
+                    "FROM user NATURAL JOIN favouritetracks NATURAL JOIN track " .
+                    "WHERE trackid={$trackdetails['trackid']} " .
+                    "ORDER BY username ASC";
+            $result = mysqli_query($db_server, $favouritetrackquery);
+            if (!mysqli_num_rows($result)) {
+                echo '<p>Nobody has favourited this album yet.</p>';
             } else {
                 $len = mysqli_num_rows($result);
                 for ($i = 0; $i < $len; ++$i) {
                     $favouritetrackdetails = mysqli_fetch_assoc($result);
-                    echo "<p><a href='userlist.php?userid={$favouritetrackdetails['userid']}'>{$favouritetrackdetails['username']}</a> - {$favouritetrackdetails['trackdatetimefavourited']}</p>";
+                    echo "<p><a href='tracklist.php?userid={$favouritetrackdetails['userid']}'>{$favouritetrackdetails['username']}</a> - {$favouritetrackdetails['trackdatetimefavourited']}</p>";
                 }
             }
-                echo "<h2>Description</h2><p>{$trackdetails['trackdescription']}</p>";
-            }
+            echo "<h2>Description</h2><p>{$trackdetails['trackdescription']}</p>";
+        }
     }
     echo '</div>';
 }

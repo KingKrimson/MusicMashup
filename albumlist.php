@@ -65,6 +65,7 @@ require_once 'login.php'
 <?php
 
 function show_album($albumid) {
+    require_once('favourite.php');
     global $db_hostname;
     global $db_username;
     global $db_password;
@@ -82,6 +83,7 @@ function show_album($albumid) {
             $albumdetails = mysqli_fetch_assoc($result);
             echo "<h1>{$albumdetails['albumname']}</h1>";
             echo"<img src=\"{$albumdetails['albumcoveruri']}\"/>";
+            favouriteButton($db_server, $albumdetails['albumid'], 'album');
             echo "<h2>Artist</h2> <p><a href=bandlist.php?artistid={$albumdetails['artistid']}>{$albumdetails['artistname']}</a></p>";
             echo "<h2>Date</h2> <p>{$albumdetails['albumreleasedate']}</p>";
             echo "<h2>Tracks</h2>";
@@ -107,7 +109,7 @@ function show_album($albumid) {
                 $len = mysqli_num_rows($result);
                 for ($i = 0; $i < $len; ++$i) {
                     $favouritealbumdetails = mysqli_fetch_assoc($result);
-                    echo "<p><a href='userlist.php?userid={$favouritealbumdetails['userid']}'>{$favouritealbumdetails['username']}</a> - {$favouritealbumdetails['artistdatetimefavourited']}</p>";
+                    echo "<p><a href='userlist.php?userid={$favouritealbumdetails['userid']}'>{$favouritealbumdetails['username']}</a> - {$favouritealbumdetails['albumdatetimefavourited']}</p>";
                 }
             }
             echo "<h2>Description</h2> <p>{$albumdetails['albumdescription']}</p>";
