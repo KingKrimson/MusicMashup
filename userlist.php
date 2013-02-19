@@ -9,7 +9,7 @@
      tracks they favourited.                                                 -->
 <!DOCTYPE html>
 <?php require_once 'databasevars.php';
-require_once 'login.php' ?>
+?>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -102,10 +102,10 @@ function show_user($userid) {
             if (!mysqli_num_rows($result)) {
                 echo "<p>{$userdetails['username']} doesn't have any favourite albums yet.</p>";
             } else {
-                $len = mysqli_num_rows();
+                $len = mysqli_num_rows($result);
                 for ($i = 0; $i < $len; ++$i) {
-                    $favouritealbumdetails = mysqli_query($result, $favouritealbumquery);
-                    echo "<p><a href='albumlist.php?albumid={$favouritealbumdetails['albumid']}'>{$favouritealbumdetails['albumname']}</a> - {$favoritealbumdetails['trackdatetimefavourited']}</p>";
+                    $favouritealbumdetails = mysqli_fetch_assoc($result);
+                    echo "<p><a href='albumlist.php?albumid={$favouritealbumdetails['albumid']}'>{$favouritealbumdetails['albumname']}</a> - {$favouritealbumdetails['albumdatetimefavourited']}</p>";
                 }
             }
             $favouritetrackquery = "SELECT trackid, trackname, trackdatetimefavourited " .
@@ -117,10 +117,10 @@ function show_user($userid) {
             if (!mysqli_num_rows($result)) {
                 echo "<p>{$userdetails['username']} doesn't have any favourite tracks yet.</p>";
             } else {
-                $len = mysqli_num_rows();
+                $len = mysqli_num_rows($result);
                 for ($i = 0; $i < $len; ++$i) {
-                    $favouritetrackdetails = mysqli_query($result, $favouritetrackquery);
-                    echo "<p><a href='tracklist.php?trackid={$favouritetrackdetails['trackid']}'>{$favouritetrackdetails['trackname']}</a> - {$favoritetrackdetails['trackdatetimefavourited']}</p>";
+                    $favouritetrackdetails = mysqli_fetch_assoc($result);
+                    echo "<p><a href='tracklist.php?trackid={$favouritetrackdetails['trackid']}'>{$favouritetrackdetails['trackname']}</a> - {$favouritetrackdetails['trackdatetimefavourited']}</p>";
                 }
             }
 

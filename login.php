@@ -15,6 +15,7 @@
 require_once 'databasevars.php';
 
 $loginstatus = login();
+header("Location: http://isa.cems.uwe.ac.uk/~ad3-brown/DSA/MusicMashup/home.php");
 /*
  * handles login and logout for the site. Has a variety of return values:
  * -2: Couldn't access database.
@@ -49,7 +50,7 @@ function login() {
     if (isset($_POST['logout'])) { // 'logout' button has been clicked.
         //by setting the cookie deletion date to a time in the past, we force 
         //deletion of the cookie.
-        setcookie('userid', $userdetails['userid'], time() + (60 * 60 * 24 * 365));
+        setcookie('userid', $userdetails['userid'], time() - (60 * 60 * 24 * 365));
         setcookie('username', '', time() - (60 * 60 * 24 * 365));
         setcookie('useravataruri', '', time() - (60 * 60 * 24 * 365));
         return 2;

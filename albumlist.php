@@ -9,7 +9,6 @@
 <!DOCTYPE html>
 <?php
 require_once 'databasevars.php';
-require_once 'login.php'
 ?>
 <html>
     <head>
@@ -56,7 +55,7 @@ require_once 'login.php'
         }
 
         echo '<div class="clear"></div>';
-        include_once 'widgetpane.php';
+        //include_once 'widgetpane.php';
         include_once 'footer.html';
         ?>    
     </body>

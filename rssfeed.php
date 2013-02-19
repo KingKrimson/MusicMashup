@@ -4,8 +4,7 @@
      Description: 
      The homepage for the website. This is really a jumping off
      point for the rest of the site; there's not much here otherwise.        -->
-<?php require_once 'databasevars.php'; 
-      require_once 'login.php' ?>
+<?php require_once 'databasevars.php';  ?>
 <!DOCTYPE html>
 <html>
     <head>

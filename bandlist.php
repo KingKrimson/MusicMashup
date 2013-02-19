@@ -10,7 +10,6 @@
 <!DOCTYPE html>
 <?php
 require_once 'databasevars.php';
-require_once 'login.php'
 ?>
 <html>
     <head>

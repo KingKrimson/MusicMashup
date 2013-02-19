@@ -6,7 +6,6 @@
      rest of the site; there's not much else here otherwise.                 -->
 
 <!DOCTYPE html>
-<?php require_once 'login.php'; ?>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">

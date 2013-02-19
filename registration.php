@@ -7,7 +7,7 @@
      themselves to the database.     
 -->
 <?php require_once 'databasevars.php';
-require_once 'login.php' ?>
+ ?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -65,7 +65,7 @@ function extraDetails() {
     if (!($db_server = mysqli_connect($db_hostname, $db_username, $db_password, $db_database))) {
         echo '<p>Could not connect to database:' . mysqli_error($db_server) . '</p>';
     } else {
-        $insertuserquery = "INSERT INTO user (username, userpassword) VALUES ('$_POST[username]', SHA1('$_POST[password]'))";
+        $insertuserquery = "INSERT INTO user (username, userpassword) VALUES ('$_POST[username]', SHA1('$password'))";
         if (!mysqli_query($db_server, $insertuserquery)) {
             echo "<p>Couldn't insert you into database: " . mysqli_error() . "</p>";
         } else {

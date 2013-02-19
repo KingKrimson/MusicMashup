@@ -1,28 +1,29 @@
-/*******************************************************************************
-Name: alternews.css
-Author: Andrew Brown
-Date: 03/02/2013
-Description:
-I'm pretty terrible at CSS, but this is a start. To be honest, the style
-is probably the least important aspect of the website, so prettying it up
-can probably wait until the end of the project. Full disclosure, I based
-this code off of the CSS for the 'WebAir' website last albumreleasedate, which I
-developed along with Alex Brown, Dan Park, and David Armstrong. The CSS
-was written by myself and David.
+/******************************************************************************* 
+    Name: alternews.css
+    Author: Andrew Brown
+    Date: 03/02/2013
+    Description:
+    I'm pretty terrible at CSS, but this is a start. To be honest, the style
+    is probably the least important aspect of the website, so prettying it up
+    can probably wait until the end of the project. Full disclosure, I based 
+    this code off of the CSS for the 'WebAir' website last albumreleasedate, which I 
+    developed along with Alex Brown, Dan Park, and David Armstrong. The CSS 
+    was written by myself and David.  
 *******************************************************************************/
 
 /*******************************************************************************
 General site display (body, html and divs)
 *******************************************************************************/
-html {
-    display: block;
+html { 
+    height: 100%;
+	width: 100%;
     overflow: auto;
     background-color: black;
 }
 
 body {
+	height: 100%;
     display: block;
-    width: 900px;
     background-color: white;
     width: 1024px;
     margin: auto;
@@ -66,17 +67,17 @@ header {
 Login stuff
 *******************************************************************************/
 
-div.login{
+div.login{  
 display: inline;
 overflow: hidden;
 }
 
 table.login{
-float:right;
-margin-top: 5px;
+float:right; 
+margin-top: 5px; 
 margin-bottom: 0px;
 margin-left: 0px;
-margin-right: 0px;
+margin-right: 0px; 
 }
 
 text.login{
@@ -88,21 +89,21 @@ Navigation bar
 *******************************************************************************/
 
 div.mainnav{
-overflow: hidden;
+overflow: hidden; 
 display:inline;
 }
 
 ul#list-nav
  {
-float: left;
+float: left; 
 margin-top: 5px;
 margin-right: 0px;
 margin-left: 0px;
-margin-bottom: 5px;
+margin-bottom: 5px; 
 padding-top: 0px;
 padding-bottom: 5px;
 padding-left: 0px;
-padding-right: 0px;
+padding-right: 0px; 
 list-style:none;
 overflow: auto;
 font-family: Verdana, Geneva, sans-serif;
@@ -147,7 +148,7 @@ font-family: Verdana, Geneva, sans-serif;
 }
 
 
-ul#list-nav li a:hover
+ul#list-nav li a:hover 
 {
 background:#999999;
 color:#000;

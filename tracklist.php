@@ -9,7 +9,6 @@
      favourited it.                                                          -->
 <?php
 require_once 'databasevars.php';
-require_once 'login.php'
 ?>
 <!DOCTYPE html>
 <html>
@@ -93,7 +92,7 @@ function show_track($trackid) {
                     "ORDER BY username ASC";
             $result = mysqli_query($db_server, $favouritetrackquery);
             if (!mysqli_num_rows($result)) {
-                echo '<p>Nobody has favourited this album yet.</p>';
+                echo '<p>Nobody has favourited this track yet.</p>';
             } else {
                 $len = mysqli_num_rows($result);
                 for ($i = 0; $i < $len; ++$i) {

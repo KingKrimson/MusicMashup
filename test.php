@@ -19,6 +19,20 @@
                 }
                 return request
             }
+            
+            function jAjaxRequest() {
+                $.ajax({
+                    url: "gettitles.php",
+                    beforeSend: function ( xhr ) {
+                        xhr.overrideMimeType("text/plain; charset=x-user-defined");
+                    }
+                }).done(function ( data ) {
+                    if( console && console.log ) {
+                        console.log("Sample of data:", data.slice(0, 100));
+                    }
+                });
+            }
+            
             function getTitles() {
                 params = "gettitles=1"
                 request = new ajaxRequest()
@@ -45,7 +59,7 @@
         <span id="replace">This text will be replaced!</span>
         <table>
             <tr>
-                <td><form onclick="getTitles()"><input type="button" name="tracks" value="get tracks"/></form></td>
+                <td><form onclick="jAjaxRequest()"><input type="button" name="tracks" value="get tracks"/></form></td>
             </tr>
         </table>
     </body>

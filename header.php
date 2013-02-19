@@ -23,10 +23,10 @@
 </div> <!-- End of Navbar --> 
 <?php
 echo '<div class=login> <!-- start of login -->';
-echo '<form class="login" action="" method="post">';
+echo '<form class="login" action="login.php" method="post">';
 echo '<table class="login">';
 echo '<tr>';
-if (isset($_COOKIE["username"])) {
+if (isset($_COOKIE["userid"])) {
     echo "<td><img src='{$_COOKIE['useravataruri']}' height='50' width='50'/></td>";
     echo "<td>Hi, {$_COOKIE['username']}!</td>";
     echo "<td><input type='submit' name='logout' value='logout' /></td>";
