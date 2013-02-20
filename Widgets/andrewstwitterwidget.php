@@ -34,7 +34,7 @@ if (isset($_GET['artistid']) || isset($_GET['albumid']) || isset($_GET['trackid'
     $search = strtolower(str_replace(" ", "", $artistdetails['artistname']));
     $artistid = $artistdetails['artistid'];
 } else {
-    $search = "alternaterock";
+    $search = "alternativerock";
     $artistid = 0;
 }
 
@@ -43,21 +43,26 @@ $query = "SELECT twitterjson FROM tweetcache WHERE artistid = $artistid " .
 
 $twitterquery .= "q=".$search."&rpp=20&lang=en&resulttype=mixed&include_entities=true";
 
-$json = file_get_contents($twitterquery);
+$jsonstring = file_get_contents($twitterquery);
+$twitterjson = json_decode($jsonstring);
 ?>
 
-<script type="text/javascript">
-            function twitter() {
-                var $twitterJson = eval('(' + <?php echo $json; ?> + ')')
-                document.getElementById("twitterbody").innerHTML = "Wassup."
-            }
-            
-</script>
 
 <div id="twitterwidget">
     <!--<img src="../Images/SiteImages/twitter.jpg" />-->
     <div id="twitterbody">
-        <script> twitter() </script>
+        <?php 
+        foreach ($twitterjson->results as $tweet) {
+            echo "<div class=\"tweet\">\n";
+            echo "<table>\n";
+            echo "<tr><td><img src={$tweet->profile_image_url}></td>"
+                 . "<td><a href=\"https://twitter.com/{$tweet->from_user}\">$tweet->from_user</a></td></tr>\n";
+            echo "</table>\n";
+            echo "{$tweet->created_at}\n";
+            echo "<p>{$tweet->text}</p>";
+            echo "</div>\n";
+        }
+        ?>
     </div>
 </div>
 
