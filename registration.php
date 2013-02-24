@@ -33,8 +33,8 @@
             echo "<p>Hey there {$_COOKIE['username']}! Looks like you're already registered! Get out there and favourite some bands or tracks!</p>";
         }
         echo '</div>';
-        echo '<div class="clear"/>';
         include_once 'widgetpane.php';
+        echo '<div class="clear"/>';
         include_once 'footer.html';
         ?>
     </body>

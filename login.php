@@ -15,7 +15,12 @@
 require_once 'databasevars.php';
 
 $loginstatus = login();
-header("Location: http://isa.cems.uwe.ac.uk/~ad3-brown/DSA/MusicMashup/home.php");
+if($loginstatus == -2 || $loginstatus == -1) {
+    echo "<script>alert(\"Whoops! Try again!\")</script>";
+}
+
+//header("Location: http://isa.cems.uwe.ac.uk/~ad3-brown/DSA/MusicMashup/home.php");
+header("Location: http://localhost/MusicMashup/home.php");
 /*
  * handles login and logout for the site. Has a variety of return values:
  * -2: Couldn't access database.

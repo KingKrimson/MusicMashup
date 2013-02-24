@@ -51,8 +51,8 @@
             }
             echo '</div>';
         }
-        echo '<div class="clear"></div>';
         include_once 'widgetpane.php';
+        echo '<div class="clear"></div>';
         include_once 'footer.html';
         ?>    
     </body>

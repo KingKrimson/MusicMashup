@@ -43,8 +43,8 @@ require_once 'databasevars.php';
         }
 
         echo '</div>';
-        echo '<div class="clear"></div>';
         include_once 'widgetpane.php';
+        echo '<div class="clear"></div>';
         include_once 'footer.html';
         ?>    
     </body>
@@ -110,6 +110,7 @@ function show_band($artistid) {
             }
             echo "<h2>Description</h2>";
             echo "<p>{$artistdetails['artistdescription']}</p>";
+            echo "<p>Description taken from Wikipedia.<p>\n";
         }
     }
     echo '</div>';

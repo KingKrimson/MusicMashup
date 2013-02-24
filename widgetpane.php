@@ -8,5 +8,7 @@
      you need to do to add a new widget is 'include/require' it within the 
      'div' tag. -Andrew                                                      -->
      
-     <div class ="widgetpane">
+     <div id="widgetpane">
+         <h1>Widgets</h1>
+         <?php require_once ("./Widgets/andrewstwitterwidget.php")?>
      </div>

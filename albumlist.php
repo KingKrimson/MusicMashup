@@ -54,8 +54,8 @@ require_once 'databasevars.php';
             echo '</div>';
         }
 
+        include_once 'widgetpane.php';        
         echo '<div class="clear"></div>';
-        //include_once 'widgetpane.php';
         include_once 'footer.html';
         ?>    
     </body>
@@ -112,6 +112,7 @@ function show_album($albumid) {
                 }
             }
             echo "<h2>Description</h2> <p>{$albumdetails['albumdescription']}</p>";
+            echo "<p>Description taken from Wikipedia.<p>\n";
         }
     }
     echo '</div>';

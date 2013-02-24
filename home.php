@@ -26,8 +26,8 @@
                want to register, just click on the register page and fill
                in your details!</p>
         </div>    
-        <div class="clear"></div>
         <?php include_once 'widgetpane.php'; ?>
+        <div class="clear"></div>
         <?php include_once 'footer.html'; ?>    
     </body>
 

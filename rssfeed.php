@@ -19,8 +19,8 @@
             <h1>RSS</h1>
             <p>RSS goes here</p>
         </div>
-        <div class="clear"></div>
         <?php include_once 'widgetpane.php'; ?>
+        <div class="clear"></div>
         <?php include_once 'footer.html'; ?>    
     </body>
 
