@@ -12,7 +12,7 @@
 </header>
 <div class="mainnav"> <!-- start of Navbar -->
     <ul id="list-nav">
-        <li><a href="home.php">Home</a></li>
+        <li><a href="index.php">Home</a></li>
         <li><a href="bandlist.php">Bands</a></li>
         <li><a href="albumlist.php">Albums</a></li>
         <li><a href="tracklist.php">Tracks</a></li>
@@ -22,24 +22,21 @@
     </ul>
 </div> <!-- End of Navbar --> 
 <?php
-echo '<div class=login> <!-- start of login -->';
-echo '<form class="login" action="login.php" method="post">';
-echo '<table class="login">';
-echo '<tr>';
-if (isset($_COOKIE["userid"])) {
+echo "<div class=login> <!-- start of login -->\n";
+echo "<form class='login' action='login.php' method='post'>\n";
+echo "<table class='login'>\n";
+echo "<tr>\n";
+if (isset($_COOKIE["userid"])) { //if user is logged on, display their details.
     echo "<td><img src='{$_COOKIE['useravataruri']}' height='25' width='25'/></td>";
     echo "<td>Hi, {$_COOKIE['username']}!</td>";
     echo "<td><input type='submit' name='logout' value='logout' /></td>";
-} else {
-    if (isset($logonstatus) && $logonstatus == -1) {
-        echo '<td>Whoops! Try again!</td>';
-    }
-    echo '<td><input type="text" id="Name" name="username" placeholder="Username" size="16"/></td>';
-    echo '<td><input type="text" id="Password" name="password" placeholder="Password" size="16"/></td>';
-    echo '<td><input type="submit" name="login" value="login" /></td>';
+} else { //Otherwise, show the login bar, and let them try to login.
+    echo "<td><input type='text' id='Name' name='username' placeholder='Username' size='16'/></td>\n";
+    echo "<td><input type='password' id='Password' name='password' placeholder='Password' size='16'/></td>\n";
+    echo "<td><input type='submit' name='login' value='login' /></td>\n";
 }
-echo '</tr>';
-echo '</table>';
-echo '</form>';
-echo '</div>  <!-- End of login -->';
+echo "</tr>\n";
+echo "</table>\n";
+echo "</form>\n";
+echo "</div>  <!-- End of login -->\n";
 ?>

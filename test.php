@@ -1,8 +1,15 @@
-<html>
-
-    <head>
-        <title>Ajaxtest</title>
         <script>
+            /*******************************************************************
+             *This function was taken from 'Learning PHP, MySQL, Javascript
+             *& CSS, 2nd edition'.
+             *Author: Robin Nixon.
+             *Publisher: O'Reilly.
+             *Date: August 2012.
+             *ISBN: 978-1-449-31926-7.
+             *
+             *It creates a valid XMLHttpRequest object for the browser, and then
+             *returns that object.
+             ******************************************************************/
             function ajaxRequest() {
                 try {
                     var request = new XMLHttpRequest()
@@ -20,21 +27,8 @@
                 return request
             }
             
-            function jAjaxRequest() {
-                $.ajax({
-                    url: "gettitles.php",
-                    beforeSend: function ( xhr ) {
-                        xhr.overrideMimeType("text/plain; charset=x-user-defined");
-                    }
-                }).done(function ( data ) {
-                    if( console && console.log ) {
-                        console.log("Sample of data:", data.slice(0, 100));
-                    }
-                });
-            }
-            
-            function getTitles() {
-                params = "gettitles=1"
+            function getTitles(items, sorttype) {
+                params = "get" + items + "=1&sorttype=" + sorttype 
                 request = new ajaxRequest()
                 request.open("POST", "gettitles.php", true)
                 request.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
@@ -45,7 +39,7 @@
                     if(this.readyState == 4) {
                         if (this.status == 200) {
                             if(this.responseText != null) {
-                                document.getElementById("replace").innerHTML = this.responseText
+                                document.getElementById(items).innerHTML = this.responseText
                             } else alert("Ajax error: No data recieved!")
                         } else alert("Ajax error: " + this.statusText)
                     }
@@ -54,14 +48,3 @@
             }
 
         </script>
-    </head>    
-    <body>
-        <span id="replace">This text will be replaced!</span>
-        <table>
-            <tr>
-                <td><form onclick="jAjaxRequest()"><input type="button" name="tracks" value="get tracks"/></form></td>
-            </tr>
-        </table>
-    </body>
-
-</html>

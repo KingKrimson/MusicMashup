@@ -175,7 +175,6 @@ div#widgetpane {
     min-height: 500px;
     float: right;
     display: block;
-    overflow: auto;
     border: 3px solid black;
     border-radius: 15px;    
 }
@@ -190,7 +189,7 @@ div#twitterwidget {
     border: 3px solid black;
     border-radius: 15px;
     width: 300px;
-    height: 400px;
+    height: 420px;
     float: left;
     padding: 0px 25px;
 }
@@ -204,7 +203,7 @@ div#twitterbody {
     width: 300px;
     overflow: auto;
     float: left;
-    padding-bottom: 25px;
+    margin-bottom: 10px;
     
 }
 div.tweet {

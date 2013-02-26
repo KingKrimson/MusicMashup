@@ -15,12 +15,12 @@
 require_once 'databasevars.php';
 
 $loginstatus = login();
-if($loginstatus == -2 || $loginstatus == -1) {
+if($loginstatus == -2 || $loginstatus == -1) { //login has failed, alert user.
     echo "<script>alert(\"Whoops! Try again!\")</script>";
 }
 
-//header("Location: http://isa.cems.uwe.ac.uk/~ad3-brown/DSA/MusicMashup/home.php");
-header("Location: http://localhost/MusicMashup/home.php");
+//header("Location: http://isa.cems.uwe.ac.uk/~ad3-brown/DSA/MusicMashup/index.php");
+header("Location: http://localhost/MusicMashup/index.php"); //redirect to the index/
 /*
  * handles login and logout for the site. Has a variety of return values:
  * -2: Couldn't access database.
@@ -30,25 +30,28 @@ header("Location: http://localhost/MusicMashup/home.php");
  */
 function login() {
     global $db_hostname, $db_username, $db_password, $db_database, $salt1, $salt2;
-    if (isset($_POST['login'])) {
+    if (isset($_POST['login'])) { //login is set, so grab the relevant variables from post.
         $username = $_POST['username'];
         $password = $_POST['password'];
-        $password = $salt1.$password.$salt2;
+        $password = $salt1.$password.$salt2; //salt the password, so we can check 
+                                             //it against the one stored in the database.
         if (!($db_server = mysqli_connect($db_hostname, $db_username, $db_password, $db_database))) {
             return -2;
         } else {
+            //try to find a user with the details the current user entered.
             $logonquery = "SELECT userid, username, useravataruri FROM user WHERE "
                     . "username = '$username' AND userpassword = SHA1('$password')";
             $result = mysqli_query($db_server, $logonquery);
-            if (!mysqli_num_rows($result)) {
+            if (!mysqli_num_rows($result)) { //not found.
                 return -1;
-            } else {
+            } else { //found. Log the user in using cookies.
                 $userdetails = mysqli_fetch_assoc($result);
+                //set cookies, and their time to live.
                 setcookie('userid', $userdetails['userid'], time() + (60 * 60 * 24 * 7));
                 setcookie('username', $userdetails['username'], time() + (60 * 60 * 24 * 7));
                 setcookie('useravataruri', $userdetails['useravataruri'], time() + (60 * 60 * 24 * 7));
                 mysqli_close($db_server);
-                return 1;
+                return 1; //success!
             }
         }
     }
@@ -58,7 +61,7 @@ function login() {
         setcookie('userid', $userdetails['userid'], time() - (60 * 60 * 24 * 365));
         setcookie('username', '', time() - (60 * 60 * 24 * 365));
         setcookie('useravataruri', '', time() - (60 * 60 * 24 * 365));
-        return 2;
+        return 2; //logout successful.
     }
     return 0;
 }

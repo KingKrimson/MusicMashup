@@ -12,7 +12,7 @@
  */
 require_once('databasevars.php');
 
-if (isset($_POST['Favourite'])) {
+if (isset($_POST['Favourite'])) { //check which item type should be favourited.
     if (isset($_POST['artistid'])) {
         $favouritestatus = favourite($_POST['userid'], $_POST['artistid'], 'artist');
     } else if (isset($_POST['albumid'])) {
@@ -20,13 +20,20 @@ if (isset($_POST['Favourite'])) {
     } else if (isset($_POST['trackid'])) {
         $favouritestatus = favourite($_POST['userid'], $_POST['trackid'], 'track');
     }
-} else
-    $favouritestatus = false;
+} else $favouritestatus = false; //couldn't actually find an item type to favourite.
 
+/*
+ * This function handles the actually favouriting. It takes the userid, itemid,
+ * and the type of the item, so it knows which table to put teh favourite in.   
+ */
 function favourite($userid, $itemid, $typeofitem) {
-    global $db_hostname, $db_username, $db_password, $db_database;
+    global $db_hostname, 
+           $db_username, 
+           $db_password, 
+           $db_database;
 
     $db_server = mysqli_connect($db_hostname, $db_username, $db_password, $db_database);
+    //insert favourite into appropriate database.
     $favouritequery = "INSERT INTO favourite" . "$typeofitem" . "s"
             . "($typeofitem" . "datetimefavourited, " . "$typeofitem" . "id, userid)"
             . " VALUES (NOW(), $itemid, $userid)";
@@ -34,8 +41,7 @@ function favourite($userid, $itemid, $typeofitem) {
         echo 'Error favouriting item:' . mysqli_error($db_server);
         return false;
     } else {
-        //Also, add info to RSS feed.
-        return true;
+        return true; //success!
     }
 }
 

@@ -18,23 +18,23 @@
     <body>
         <?php
         include_once 'header.php';
-        echo '<div class="clear">';
-        echo '<div id="pagecontent">';
-        if (!isset($_COOKIE['username'])) {
-            if (!isset($_POST['num'])) {
+        echo "<div class='clear'>\n";
+        echo "<div id='pagecontent'>\n";
+        if (!isset($_COOKIE['username'])) { //If user isn't logged in
+            if (!isset($_POST['num'])) { //If user hasn't begun the registration process
                 firstLoad();
-            } else if ($_POST['num'] == 1) {
+            } else if ($_POST['num'] == 1) { //User has finished intial step, can add extra details.
                 extraDetails();
-            } else if ($_POST['num'] == 2) {
+            } else if ($_POST['num'] == 2) { //Registration has been completed.
                 registrationComplete();
             }
-        } else {
-            echo '<h1>You\'re already registered</h1>';
+        } else { //user is logged in.
+            echo "<h1>You're already registered</h1>\n";
             echo "<p>Hey there {$_COOKIE['username']}! Looks like you're already registered! Get out there and favourite some bands or tracks!</p>";
         }
-        echo '</div>';
+        echo "</div>\n";
         include_once 'widgetpane.php';
-        echo '<div class="clear"/>';
+        echo "<div class='clear'/>\n";
         include_once 'footer.html';
         ?>
     </body>
@@ -50,25 +50,34 @@ function firstLoad() {
         <form class="register" action="registration.php" method="post">
             <table class="register">
                 <tr><td><input type="text" id="Name" name="username"  placeholder="Desired username" size="16"/></td></tr>
-                <tr><td><input type="text" id="Password" name="password" placeholder="Desired password" size="16"/></td></tr>
-                <tr><td><input type="hidden" name="num" value="1"/></td></tr>
+                <tr><td><input type="password" id="Password" name="password" placeholder="Desired password" size="16"/></td></tr>
+                <!-- use hidden field to determine what stage the user is at in the process. -->
+                <tr><td><input type="hidden" name="num" value="1"/></td></tr> 
                 <tr><td><input type="submit" value="Register" /></td></tr>
             </table>
         </form>
-    </div>  <!-- End of login --> 
+    </div>
     <?php
 }
 
 function extraDetails() {
-    global $db_hostname, $db_username, $db_password, $db_database, $salt1, $salt2;
+    global $db_hostname, 
+           $db_username,
+           $db_password,
+           $db_database,
+           $salt1, 
+           $salt2;
+    
+    //salt the password.
     $password = $salt1 . $_POST['password'] . $salt2;
     if (!($db_server = mysqli_connect($db_hostname, $db_username, $db_password, $db_database))) {
-        echo '<p>Could not connect to database:' . mysqli_error($db_server) . '</p>';
-    } else {
+        echo "<p>Could not connect to database:" . mysqli_error($db_server) . "</p>\n";
+    } else { //insert user into databse.
+        //password is hashed. It was salted earlier.
         $insertuserquery = "INSERT INTO user (username, userpassword) VALUES ('$_POST[username]', SHA1('$password'))";
         if (!mysqli_query($db_server, $insertuserquery)) {
-            echo "<p>Couldn't insert you into database: " . mysqli_error() . "</p>";
-        } else {
+            echo "<p>Couldn't insert you into database: " . mysqli_error($db_server) . "</p>\n";
+        } else { //user can now enter more details about themselves.
             ?>
             <h1>Tell us about yourself</h1>
             <p>Congratulations <?php echo "{$_POST['username']}" ?>! You have successfully registered!
@@ -99,9 +108,10 @@ function registrationComplete() {
 
 
     if (!($db_server = mysqli_connect($db_hostname, $db_username, $db_password, $db_database))) {
-        echo '<p>Could not connect to database:' . mysqli_error() . '</p>';
-    } else {
-        $insertuserquery = "UPDATE user SET userrealname='$_POST[realname]', userage='$_POST[age]', userdescription='$_POST[description]' WHERE username='$_POST[username]'";
+        echo "<p>Could not connect to database:" . mysqli_error() . "</p>\n";
+    } else { //update user details so that the info they added in extraDetails() is in the db.
+        $insertuserquery = "UPDATE user SET userrealname='$_POST[realname]', userage='$_POST[age]'," . 
+                           " userdescription='$_POST[description]' WHERE username='$_POST[username]'";
         if (!mysqli_query($db_server, $insertuserquery)) {
             echo "Couldn't insert your data into database: " . mysqli_error();
         } else {
