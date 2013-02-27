@@ -42,6 +42,7 @@ require_once 'databasevars.php';
                     echo "<p>Could not access albums: " . mysqli_error($db_server) . "</p>\n";
                 } else {
                     $len = mysqli_num_rows($result);
+                    echo "<span id=albums>\n";
                     echo "<table>\n";
                     //loop through results, outputting details about each album
                     //users can click on details (tracks, albums, etc), and via 
@@ -57,6 +58,7 @@ require_once 'databasevars.php';
                         echo "</tr>\n";
                     }
                     echo "</table>\n";
+                    echo "</span>\n";
                 }
             }
             echo "</div>\n";

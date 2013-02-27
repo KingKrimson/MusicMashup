@@ -30,7 +30,7 @@
             }
         } else { //user is logged in.
             echo "<h1>You're already registered</h1>\n";
-            echo "<p>Hey there {$_COOKIE['username']}! Looks like you're already registered! Get out there and favourite some bands or tracks!</p>";
+            echo "<p>Hey there {$_COOKIE['username']}! Looks like you're already registered! Get out there and favourite some bands, albums, or tracks!</p>";
         }
         echo "</div>\n";
         include_once 'widgetpane.php';

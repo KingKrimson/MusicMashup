@@ -1,5 +1,5 @@
 <?php
-/*******************************************************************************
+/* * *****************************************************************************
  * Filename: andrewstwitterwidget.html
  * Author: Andrew Brown
  * Date: 17/02/2013
@@ -28,7 +28,7 @@
  * pages. It is not meant to be viewed on it's own.
  * 
  * -Andrew
- * *****************************************************************************/
+ * **************************************************************************** */
 
 $twitterquery = "http://search.twitter.com/search.json?"; //base twitter search api uri.
 require_once("C:/xampp/htdocs/MusicMashup/databasevars.php");
@@ -60,58 +60,61 @@ if (isset($_GET['artistid']) || isset($_GET['albumid']) || isset($_GET['trackid'
 $cachequery = "SELECT twitterjsonstring FROM twittercache WHERE artistid=$artistid" .
         " AND NOW() < ADDDATE(twitterdatetimecached, INTERVAL 3 MINUTE)";
 
-$results = mysqli_query($db_server, $cachequery);
+if (!$results = mysqli_query($db_server, $cachequery)) {
+    echo "SQL query error: " . $mysqli_error($db_server);
+} else {
+    if (mysqli_num_rows($results) != 0) { //it hasn't, so grab cached json string.
+        $twitterdetails = mysqli_fetch_assoc($results);
+        $jsonstring = $twitterdetails['twitterjsonstring'];
+    } else { //It has been, so make new Twitter query.
+        //Search for artist. 100 results, english language, recent and popular tweets, and include entities (Hashtags, etc).
+        $twitterquery .= "q=" . $search . "&rpp=100&lang=en&resulttype=mixed&include_entities=true";
 
-if (mysqli_num_rows($results) != 0) { //it hasn't, so grab cached json string.
-    $twitterdetails = mysqli_fetch_assoc($results);
-    $jsonstring = $twitterdetails['twitterjsonstring'];
-    $jsonstring = stripslashes($jsonstring);
-} else { //It has been, so make new Twitter query.
+        //Get search results from twitter.
+        $jsonstring = file_get_contents($twitterquery);
 
-    //Search for artist. 100 results, english language, recent and popular tweets, and include entities (Hashtags, etc).
-    $twitterquery .= "q=" . $search . "&rpp=100&lang=en&resulttype=mixed&include_entities=true";
-
-    //Get search results from twitter.
-    $jsonstring = file_get_contents($twitterquery);
-
-    //caches the jsonstring and the current time for the selected artist.
-    $cachequery = "UPDATE twittercache SET twitterjsonstring = '" . addslashes($jsonstring) .
-            "', twitterdatetimecached = NOW( ) WHERE artistid = $artistid";
-    if (!mysqli_query($db_server, $cachequery)) {
-        echo "Error caching tweets!";
-        echo mysqli_error($db_server);
+        //caches the jsonstring and the current time for the selected artist.
+        //the json string is slashed so that any quotes in it don't confuse the database. 
+        $cachequery = "UPDATE twittercache SET twitterjsonstring = '" . addslashes($jsonstring) .
+                "', twitterdatetimecached = NOW( ) WHERE artistid = $artistid";
+        if (!mysqli_query($db_server, $cachequery)) {
+            echo "Error caching tweets!";
+            echo mysqli_error($db_server);
+        }
     }
 }
 
 mysqli_close($db_server);
 
 //decode the json string and place it in an object that we can access.
-$twitterjson = json_decode($jsonstring);
 ?>
 
 
 <div id="twitterwidget">
     <img src="Widgets/Twitterlogo.jpg" />
     <div id="twitterbody">
-<?php
-
+        <?php
 //loop through each tweet, outputting the user's picture and name, the time 
 //the tweet was made, and the tweet text.
-foreach ($twitterjson->results as $tweet) {
-    
-    //add entities to tweet text (see function comment).
-    $text = add_entities($tweet->text, $tweet->entities);
+        if (($twitterjson = json_decode($jsonstring)) == null) {
+            echo "error decoding string!";
+        } else {
+            foreach ($twitterjson->results as $tweet) {
+                
+                //add entities to tweet text (see function comment).
+                $text = add_entities($tweet->text, $tweet->entities);
 
-    echo "<div class=\"tweet\">\n";
-    echo "<table>\n";
-    echo "<tr><td><img src={$tweet->profile_image_url}></td>"
-    . "<td><a href=\"https://twitter.com/{$tweet->from_user}\">$tweet->from_user</a></td></tr>\n";
-    echo "</table>\n";
-    echo "{$tweet->created_at}\n";
-    echo "<p>$text</p>\n";
-    echo "</div>\n";
-}
-?>
+                echo "<div class=\"tweet\">\n";
+                echo "<table>\n";
+                echo "<tr><td><img src={$tweet->profile_image_url}></td>"
+                . "<td><a href=\"https://twitter.com/{$tweet->from_user}\">$tweet->from_user</a></td></tr>\n";
+                echo "</table>\n";
+                echo "{$tweet->created_at}\n";
+                echo "<p>$text</p>\n";
+                echo "</div>\n";
+            }
+        }
+        ?>
     </div>
     <!-- This code was taken from Twitter; they provide code for the 'tweet'
          button. All I did here was use the content of the variable 'search'
@@ -157,5 +160,21 @@ function add_entities($text, $entities) {
     }
 
     return $text;
+}
+
+//get a twitter json string via UWE proxy and stop caching.
+//Based on the uwe_get_file function provided in the DSA workshops.
+function uwe_get_twitter_json($uri) {
+
+    //create oauth request string.
+
+    $context = stream_context_create(
+            array('http' =>
+                array('proxy' => 'proxysg.uwe.ac.uk:8080',
+                    'header' => 'Cache-Control: no-cache'
+                )
+            ));
+    $contents = file_get_contents($uri, false, $context);
+    return $contents;
 }
 ?>

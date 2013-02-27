@@ -33,14 +33,15 @@ require_once 'databasevars.php';
             if (!$db_server) {
                 echo "<p>Could not connect to database:" . mysqli_error($db_server) . "\n";
             } else {
-                $albumquery = 'SELECT albumcoveruri, trackid, trackname, albumid, albumname,' . 
+                $trackquery = 'SELECT albumcoveruri, trackid, trackname, albumid, albumname,' . 
                         ' artistid, artistname, albumreleasedate ' .
                         'FROM track NATURAL JOIN album NATURAL JOIN artist ORDER BY trackname ASC';
-                $result = mysqli_query($db_server, $albumquery);
+                $result = mysqli_query($db_server, $trackquery);
                 if (!$result) {
                     echo "<p>Could not access artists: " . mysqli_error($db_server) . "</p>\n";
                 } else { //Output information about all tracks in database.
                     $len = mysqli_num_rows($result);
+                    echo "<span id=tracks>\n";
                     echo "<table>\n";
                     for ($i = 0; $i < $len; ++$i) {
                         $trackdetails = mysqli_fetch_assoc($result);
@@ -53,6 +54,7 @@ require_once 'databasevars.php';
                         echo "</tr>\n";
                     }
                     echo "</table>\n";
+                    echo "</span>\n";
                 }
             }
         }

@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dsa_metafile xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="http://www.cems.uwe.ac.uk/~p-chatterjee/modules/dsa/group_metafile.xsd">
+    <!-- This file is an example of a valid group metadata file. 
+    Use this example file as a template and fill with your own data 
+    validating as you go along using Oxygen or some other schema aware editor -->
+
+    <!-- The following is the assignment metadata (not to be changed) -->
+    <module id="UFCEKG-20-2" acronymn="DSA">
+        <title>Data Schemas &amp; Applications</title>
+        <year>2013</year>
+        <hand_in>2013-02-28</hand_in>
+        <spec_url>http://www.cems.uwe.ac.uk/~p-chatterjee/2011/dsa/DSA_CW_Spec.html</spec_url>
+    </module>
+    <!-- end of metadata section -->
+
+    <!-- Group Section -->
+    <group>
+        <member id="11008259" name="Andrew Brown"/>
+        <member id="11010631" name="Chris Harpum"/>
+        <member id="11017625" name="Adrien Clark"/>
+        <member id="xxxxxxxx" name="Tom Mc Fadden"/>
+        <workshop>
+            <daytime>Wednesday 11.00</daytime>
+            <tutor>PM</tutor>
+            <tutor>GW</tutor>
+        </workshop>
+        <!-- Each student should have contributed to one or more components -->
+        <component type="Database Design">
+            <contributor id="11008259"/>
+            <contributor id="11017625"/>
+            <contributor id="xxxxxxxx"/>
+            <!-- the following text fields allow for between 80 and 300 characters -->
+            <description>Our group used the QSEE modelling tool to model a 2NF database with 
+                         the appropriate tables (artists, users, artistfavourites, etc.), 
+                         fields, primary keys and foreign keys. The workshop example based 
+                         on modelling a database for a quilt website was very 
+                         useful at aiding us in this task.
+                         </description>
+            <problems>The design was fairly straight forward, and we did it with
+                      little to no problems. The only potential issue is the fact
+                      that QSEE doesn't support some datatypes we wanted to use in 
+                      MySQL; for instance, QSEE doesn't support 'datetime'.</problems>
+            <solutions>For the model, we represented 'datetime' as 'timestamp,'
+                       and added a little comment box stating that they should
+                       be changed to 'datetime' in the physical database. This ensured
+                       that there was no ambiguity.</solutions>
+            <!-- integer required between 1 and 120 -->
+            <hours_effort>3</hours_effort>
+        </component>
+        <component type="Database Implementation">
+            <contributor id="11008259"/>
+            <contributor id="xxxxxxxx"/>
+            <description>Creating the initial MySQL database was really easy, as QSEE
+                         allowed us to export the design as a text file, which
+                         could be imported into PHPMyAdmin. From there, we
+                         hand populated the database with artists, albums,
+                         users, tracks, and various favourites(making sure to 
+                         include the correct/valid foreign keys) again using 
+                         PHPMyAdmin.</description>
+            <problems>Intially, importing the text file into the database didn't work.
+                      This was because of the way that QSEE exported the file: it
+                      included comments in a non MySQL compatable style.</problems>
+            <solutions>We opened the text file in notepad++, and stripped the comments.
+                       We then copied the remaining text, and executed it as a query,
+                       which was successful.</solutions>
+            <hours_effort>4</hours_effort>
+        </component>
+        <component type="HTML Markup">
+            <contributor id="11008259"/>
+            <description>We decided to use HTML5 instead of XHTML, as HTML5 had some useful features, such
+                         as the 'hint' attribute for textboxes in forms. In XHTML, this attribute isn't supported,
+                         and would have to be replaced by javascript.</description>
+            <problems>Since we echo a lot of HTML5 in PHP so that we can output 
+                      variables directly, the formatting of the HTML5 isn't very
+                      readable. If the user wanted to view the source using a browser, 
+                      they'd be in for a nasty shock.</problems>
+            <solutions>We could have used PHP's heredoc operator to output literal
+                       Strings. However, that leads to some unpleasent formatting
+                       in the PHP code. As developers, we felt that it was more important
+                       that the PHP was readable for us, rather than the HTML
+                       being more readable by the users. We also output newlines at the
+                       end of each HTML5 echo statement.</solutions>
+            <hours_effort>6</hours_effort>
+        </component>
+        <component type="PHP Coding">
+            <contributor id="11008259"/>
+            <contributor id="11010631"/>
+            <description>Using PHP allowed us to create a dynamic, database driven site.
+                         by pulling data from the database we were able to show all of our albums,
+                         artists, tracks, users and favourites. We also implemented things
+                         like user login/registration and favouriting.</description>
+            <problems>None of us had used PHP before, but it proved to be a very 
+                      easy language to learn. The only issues we encountered
+                      were the standard programming ones, like syntax and logic
+                      errors.</problems>
+            <solutions>We solved these issues by studying php's syntax, double checking our code,
+                       and using Netbean's PHP debugger.</solutions>
+            <hours_effort>12</hours_effort>
+        </component>
+        <component type="Javascript Coding">
+            <contributor id="11008259"/>
+            <description>We used javascript for ajax calls, which we use for sorting
+                         the tracks on the track page without reloading the page.</description>
+            <problems>The method of creating and using a XMLHttpRequest object in pure
+                      javascript can be quite confusing.</problems>
+            <solutions>There's some example code in the coursebook; we decided to
+                       use it as a starting point. It has been credited in the 
+                       source code comments.</solutions>
+            <hours_effort>3</hours_effort>
+        </component>
+        <component type="CSS Design">
+            <contributor id="11008259"/>
+            <description>Since this is an alternative rock site, we decided to
+                         use a basic 'grungy' style for it. We chose an appropriate
+                         font for our logo, and wrote a stylesheet that nicely partitions
+                         up all of the appropriate sections.</description>
+            <problems> None of us were very good at styling or writing CSS stylesheets,
+                       This posed a problem, as a dynamic website like this that doesn't have any
+                       formatting is almost unusable.</problems>
+            <solutions> We decided that using a functional but plain stylesheet was
+                        preferable to spending hours creating a pretty website.
+                        to pretty up the site. We took the stylesheet 
+                        from Andrew's previous website, and used that as a base. 
+                        This has been noted in the CSS comments. </solutions>
+            <hours_effort>3</hours_effort>
+        </component>
+        <component type="XML Markup">
+            <contributor id="11008259" />
+                <description>As the website was required a valid RSS 2.0 feed of the
+                most recently favourited artists, we used a php script to write the 
+                feed based on the favourites that we have in our database.</description>
+                <problems>We weren't entirely sure how to construct a valid RSS
+                          feed, or how to actually present it once it had been
+                          created.</problems>
+                <solutions></solutions>
+        </component>
+    </group>
+
+    <!-- Individual components are listed here -->
+    <individual id="11008259">
+        <component type="Twitter Feed">
+            <description></description>
+            <problems></problems>
+            <solutions></solutions>
+            <hours_effort>2</hours_effort>
+        </component>
+    </individual>
+    <individual id="11010631">
+        <component type="Last.fm Music Player">
+            <description> CHRIS </description>
+            <problems> HEY CHRIS</problems>
+            <solutions> WRITE STUFF HERE. 300 CHARS OR LESS FOR EACH TAG.</solutions>
+            <hours_effort>4</hours_effort>
+        </component>
+    </individual>
+    <individual id="11017625">
+        <component type="Flickr Artist Pictures">
+            <description> YO ADRIEN. </description>
+            <problems> WE DID IT. </problems>
+            <solutions>Write stuff here. 300 chars or less for each field.</solutions>
+            <hours_effort>8</hours_effort>
+        </component>
+    </individual>
+    <individual id="xxxxxxxx">
+        <component type="Song lyrics(?)">
+            <description> Put stuff here. 300 chars per tag pair. </description>
+            <problems>placeholder</problems>
+            <solutions>This too.</solutions>
+            <hours_effort>8</hours_effort>
+        </component>
+    </individual>
+
+    <!-- This section gives a link to 1-2 group components, lists the technologies used and 
+        points to any number of source files. Note that the more that these links work - 
+        the higher the mark for this section. Of course - the base_url link must work!! -->
+    <application>
+        <!-- Make sure the base_url for the main application is reachable as 
+            http://www.cems.uwe.ac.uk/~a-student/dsa/ or something very similar -->
+        <base_url>http://www.cems.uwe.ac.uk/~ad3-brown/DSA/MusicMashup</base_url>
+        <!-- a list of up to 8 technologies used (see schema) -->
+        <technologies>
+            <tech>php</tech>
+            <tech>html5</tech>
+            <tech>xml</tech>
+            <tech>javascript</tech>
+            <tech>css</tech>  
+        </technologies>
+        <!-- configuration source file if one is used - should be a .phps or .xml -->
+        <config_source>http://www.cems.uwe.ac.uk/~ad3-brown/DSA/MusicMashup/Source/databasevars.phps</config_source>
+        <!-- URL of the Data Model - could be a HTML page with ann image or a gif file -->
+        <dm_source>http://www.cems.uwe.ac.uk/~ad3-brown/DSA/MusicMashup/Database/datamodel.gif</dm_source>
+        <source_files>
+            <file>
+                <name>index.php</name>
+                <purpose>main application file</purpose>
+                <!-- source file should in a browser viewable format (e.g .phps, .xml, .txt, etc.) -->
+                <source_url>http://www.cems.uwe.ac.uk/~ad3-brown/DSA/MusicMashup/Source/index.phps</source_url>
+            </file>
+            <file>
+                <name></name>
+                <purpose></purpose>
+                <source_url></source_url>
+            </file>
+            <file>
+                <name></name>
+                <purpose></purpose>
+                <source_url></source_url>
+            </file>
+            <file>
+                <name></name>
+                <purpose></purpose>
+                <source_url></source_url>
+            </file>
+            <file>
+                <name></name>
+                <purpose></purpose>
+                <source_url></source_url>
+            </file>
+            <file>
+                <name></name>
+                <purpose></purpose>
+                <source_url></source_url>
+            </file>
+            <file>
+                <name></name>
+                <purpose></purpose>
+                <source_url></source_url>
+            </file>
+            <file>
+                <name></name>
+                <purpose></purpose>
+                <source_url></source_url>
+            </file>
+            <file>
+                <name></name>
+                <purpose></purpose>
+                <source_url></source_url>
+            </file>
+            <file>
+                <name></name>
+                <purpose></purpose>
+                <source_url></source_url>
+            </file>
+            <file>
+                <name></name>
+                <purpose></purpose>
+                <source_url></source_url>
+            </file>
+            <file>
+                <name></name>
+                <purpose></purpose>
+                <source_url></source_url>
+            </file>
+        </source_files>
+    </application>
+
+    <!-- something about any learning outcomes achieved and any other overall comments -->
+    <overall_comments> 
+        The group thought this assignment was simple. We knew all this stuff! 
+        Pellentesque augue mauris, lobortis vel elementum quis, consequat tempor felis.....
+    </overall_comments>
+</dsa_metafile>
+

@@ -35,10 +35,12 @@ require_once 'databasevars.php';
                     echo "<p>Could not access bands:" . mysqli_error($db_server) . "</p>\n";
                 } else { //display artist info.
                     $len = mysqli_num_rows($result);
+                    echo "<span id='artists'>\n";
                     for ($i = 0; $i < $len; ++$i) {
                         $artistdetails = mysqli_fetch_assoc($result);
                         echo "<p><a href='bandlist.php?artistid={$artistdetails['artistid']}'>{$artistdetails['artistname']}</a></p>\n";
                     }
+                    echo "</span>\n";
                 }
             }
         }
