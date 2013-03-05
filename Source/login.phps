@@ -19,8 +19,7 @@ if($loginstatus == -2 || $loginstatus == -1) { //login has failed, alert user.
     echo "<script>alert(\"Whoops! Try again!\")</script>";
 }
 
-//header("Location: http://isa.cems.uwe.ac.uk/~ad3-brown/DSA/MusicMashup/index.php");
-header("Location: http://www.cems.uwe.ac.uk/~ad3-brown/DSA/MusicMashup"); //redirect to the index/
+header("Location: http://www.cems.uwe.ac.uk/~ad3-brown/DSA/MusicMashup"); //redirect to the index.
 /*
  * handles login and logout for the site. Has a variety of return values:
  * -2: Couldn't access database.

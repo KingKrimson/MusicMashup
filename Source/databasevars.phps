@@ -13,15 +13,10 @@
  * the Uni network, it's somewhat acceptable in this case.
  ******************************************************************************/
 //database variables, for connecting to the database.
-$db_hostname = 'localhost';
-$db_database = 'Music_Mashup_Database';
-$db_username = 'root';
-$db_password = '';
-
-//mysql5
-//fet11008259
-//fet11008259
-//spookyghost
+$db_hostname = 'mysql5';
+$db_database = 'fet11008259';
+$db_username = 'fet11008259';
+$db_password = 'spookyghost';
 
 //Salts for passwords. 
 $salt1 = "sa1ty";

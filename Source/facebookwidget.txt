@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<head>
+<script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
+</head>
+
+<body>
+
+<div id="facebookwidget">
+
+<table><tr>
+<td><a href="http://www.facebook.com/pages/Alternews/545762888791288"><img src="Widgets/facebooklogo.png"></a></td>
+<td><ul id='likecountlist'>
+<script>
+    $.getJSON('https://graph.facebook.com/545762888791288?fields=likes',function(data) {                       
+        $("#likecountlist").append('<div class="likecount">' + data.likes + ' likes!</div>');  		            
+    });	
+</script>
+</ul></td>
+</tr></table>
+
+<div id="facebookbody">
+<ul id='postlist'>
+<script>
+    var url = 'https://graph.facebook.com/545762888791288/posts?access_token=AAACEdEose0cBALsCjm93XlQZAQPtjZAefMgtcRloCIN0F1ZB0I3WgxME4LmZBWTFDif7JydtrOyekjII9g5qjlZA1jCv6InsQj8cpgp1Ae87aTY4Ab67z&?limit=10&fields=message,story';
+    $.getJSON(url,function(data){                       
+        for (i = 0; i < data.data.length; i++) {
+			if (data.data[i].story) {
+				$("#postlist").append('<div class="post">' + data.data[i].story + '</div>');
+			}
+			
+			if (data.data[i].message) {
+				$("#postlist").append('<div class="post"><a href="http://www.facebook.com/' + data.data[i].id + '/">' + data.data[i].message + '</a></div>');
+			}
+        }               
+    });
+</script>
+</ul>
+
+</div></div>
+</body>
+</html>

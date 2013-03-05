@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
+    <system systemId="http://www.cems.uwe.ac.uk/~p-chatterjee/modules/dsa/group_metafile.xsd" uri="www.cems.uwe.ac.uk/_p-chatterjee/modules/dsa/group_metafile.xsd"/>
+</catalog>

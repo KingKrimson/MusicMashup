@@ -8,7 +8,7 @@
     presentation errors into the website. NOTE: This should only ever be 
     'included/required'. It is not intended to be viewed on it's own. -Andrew-->   
 <header>
-    <img src="Images/logo.png">
+    <img src="./Images/logo.png">
 </header>
 <div class="mainnav"> <!-- start of Navbar -->
     <ul id="list-nav">
